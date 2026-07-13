@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Asignación Horarios | UISRAEL</title>
+<title>Códigos Temporales | UISRAEL</title>
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
 <link rel="stylesheet" th:href="@{/assets/css/style.css}">
@@ -17,18 +17,18 @@
             <div class="container-fluid px-3 px-lg-4 py-4">
                 <div class="page-heading">
                     <div class="page-heading-copy">
-                        <span class="page-icon"><i class="bi bi-calendar-check"></i></span>
+                        <span class="page-icon"><i class="bi bi-key"></i></span>
                         <div>
                             <p class="eyebrow mb-1">Asistencia</p>
-                            <h1 class="h3 mb-1">Asignación Horarios</h1>
+                            <h1 class="h3 mb-1">Códigos Temporales</h1>
                         </div>
                     </div>
                 </div>
                 <section class="panel">
                     <div class="panel-header">
                         <div>
-                            <h2 class="h5 mb-1 section-title"><i class="bi bi-table"></i> Lista de Asignaciones</h2>
-                            <p class="text-muted mb-0">Horarios asignados a cada empleado.</p>
+                            <h2 class="h5 mb-1 section-title"><i class="bi bi-table"></i> Lista de Códigos Temporales</h2>
+                            <p class="text-muted mb-0">Códigos generados para el registro de empleados.</p>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -37,20 +37,22 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Empleado</th>
-                                    <th>Horario</th>
-                                    <th>Fecha Inicio</th>
-                                    <th>Fecha Fin</th>
-                                    <th>Estado</th>
+                                    <th>Código</th>
+                                    <th>Tipo</th>
+                                    <th>Generado En</th>
+                                    <th>Expira En</th>
+                                    <th>Usado</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>1</td>
                                     <td>5</td>
-                                    <td>2</td>
-                                    <td>2026-07-01</td>
-                                    <td>2026-12-31</td>
-                                    <td><span class="badge text-bg-success">Activo</span></td>
+                                    <td>AB123</td>
+                                    <td>registro</td>
+                                    <td>2026-07-09 10:00</td>
+                                    <td>2026-07-09 23:59</td>
+                                    <td><span class="badge text-bg-secondary">No</span></td>
                                 </tr>
                             </tbody>
                         </table>
