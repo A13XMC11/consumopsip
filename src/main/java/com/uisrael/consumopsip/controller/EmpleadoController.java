@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/empleado")
 public class EmpleadoController {
 
-	@GetMapping
-	public String leerPagina() {
-		return "empleado/listarempleado";
-	}
+    @GetMapping
+    public String leerPagina() {
+        return "empleado/listarempleado";
+    }
 }
