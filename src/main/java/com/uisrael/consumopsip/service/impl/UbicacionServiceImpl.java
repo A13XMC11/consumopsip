@@ -10,29 +10,20 @@ import com.uisrael.consumopsip.service.IUbicacionService;
 @Service
 public class UbicacionServiceImpl implements IUbicacionService {
 
-    private final WebClient webClient;
+	private final WebClient webClient;
 
-    public UbicacionServiceImpl(WebClient webClient) {
-        this.webClient = webClient;
-    }
+	public UbicacionServiceImpl(WebClient webClient) {
+		this.webClient = webClient;
+	}
 
-    @Override
-    public List<UbicacionResponseDto> listarUbicaciones() {
-        return webClient.get()
-                .uri("/ubicacion")
-                .retrieve()
-                .bodyToFlux(UbicacionResponseDto.class)
-                .collectList()
-                .block();
-    }
+	@Override
+	public List<UbicacionResponseDto> listarUbicaciones() {
+		return webClient.get().uri("/ubicacion").retrieve().bodyToFlux(UbicacionResponseDto.class).collectList()
+				.block();
+	}
 
-    @Override
-    public void guardarUbicacion(UbicacionRequestDto nuevaUbicacion) {
-        webClient.post()
-                .uri("/ubicacion")
-                .bodyValue(nuevaUbicacion)
-                .retrieve()
-                .toBodilessEntity()
-                .block();
-    }
+	@Override
+	public void guardarUbicacion(UbicacionRequestDto nuevaUbicacion) {
+		webClient.post().uri("/ubicacion").bodyValue(nuevaUbicacion).retrieve().toBodilessEntity().block();
+	}
 }

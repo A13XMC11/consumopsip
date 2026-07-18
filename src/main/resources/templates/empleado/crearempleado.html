@@ -1,0 +1,78 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+<head>
+<title>Nuevo Empleado | Asistencia</title>
+</head>
+<body>
+	<div layout:fragment="cargarpaginas">
+		<div class="page-heading">
+			<div class="page-heading-copy">
+				<span class="page-icon"><i class="bi bi-person-plus"></i></span>
+				<div>
+					<p class="eyebrow mb-1">Gestión</p>
+					<h1 class="h3 mb-1">Nuevo Empleado</h1>
+					<p class="text-muted mb-0">Registra un nuevo empleado en el
+						sistema.</p>
+				</div>
+			</div>
+			<div class="heading-actions">
+				<a class="btn btn-outline-secondary btn-sm" th:href="@{/empleado}">
+					<i class="bi bi-arrow-left"></i> Volver
+				</a>
+			</div>
+		</div>
+		<section class="row g-3">
+			<div class="col-12 col-xl-8">
+				<form class="panel" th:action="@{/empleado/guardar}"
+					th:object="${empleado}" method="post">
+					<div class="panel-header">
+						<div>
+							<h2 class="h5 mb-1 section-title">
+								<i class="bi bi-person-plus"></i><span>Datos del Empleado</span>
+							</h2>
+						</div>
+					</div>
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label class="form-label">Nombre</label> <input
+								class="form-control" type="text" th:field="*{nombreEmpleado}">
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">Apellidos</label> <input
+								class="form-control" type="text" th:field="*{apellidosEmpleado}">
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">Correo</label> <input
+								class="form-control" type="email" th:field="*{correoEmpleado}">
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">Contraseña</label> <input
+								class="form-control" type="password"
+								th:field="*{contrasenaEmpleado}">
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">ID Rol</label> <input
+								class="form-control" type="number" th:field="*{idRol}">
+						</div>
+						<div class="col-md-6 d-flex align-items-end">
+							<div class="form-check mb-2">
+								<input class="form-check-input" type="checkbox"
+									th:field="*{estadoEmpleado}"> <label
+									class="form-check-label">Activo</label>
+							</div>
+						</div>
+					</div>
+					<div class="d-flex justify-content-end gap-2 mt-4">
+						<a class="btn btn-outline-secondary" th:href="@{/empleado}">Cancelar</a>
+						<button class="btn btn-primary" type="submit">
+							<i class="bi bi-person-check"></i> Guardar
+						</button>
+					</div>
+				</form>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

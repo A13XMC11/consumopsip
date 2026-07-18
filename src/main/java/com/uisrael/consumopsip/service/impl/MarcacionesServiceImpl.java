@@ -10,29 +10,20 @@ import com.uisrael.consumopsip.service.IMarcacionesService;
 @Service
 public class MarcacionesServiceImpl implements IMarcacionesService {
 
-    private final WebClient webClient;
+	private final WebClient webClient;
 
-    public MarcacionesServiceImpl(WebClient webClient) {
-        this.webClient = webClient;
-    }
+	public MarcacionesServiceImpl(WebClient webClient) {
+		this.webClient = webClient;
+	}
 
-    @Override
-    public List<MarcacionesResponseDto> listarMarcaciones() {
-        return webClient.get()
-                .uri("/marcaciones")
-                .retrieve()
-                .bodyToFlux(MarcacionesResponseDto.class)
-                .collectList()
-                .block();
-    }
+	@Override
+	public List<MarcacionesResponseDto> listarMarcaciones() {
+		return webClient.get().uri("/marcaciones").retrieve().bodyToFlux(MarcacionesResponseDto.class).collectList()
+				.block();
+	}
 
-    @Override
-    public void guardarMarcacion(MarcacionesRequestDto nuevaMarcacion) {
-        webClient.post()
-                .uri("/marcaciones")
-                .bodyValue(nuevaMarcacion)
-                .retrieve()
-                .toBodilessEntity()
-                .block();
-    }
+	@Override
+	public void guardarMarcacion(MarcacionesRequestDto nuevaMarcacion) {
+		webClient.post().uri("/marcaciones").bodyValue(nuevaMarcacion).retrieve().toBodilessEntity().block();
+	}
 }
