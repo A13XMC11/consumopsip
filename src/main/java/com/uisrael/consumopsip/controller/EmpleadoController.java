@@ -18,10 +18,10 @@ import com.uisrael.consumopsip.service.IEmpleadoService;
 @RequestMapping("/empleado")
 public class EmpleadoController {
 
-    @GetMapping
+    /*@GetMapping
     public String leerPagina() {
         return "empleado/listarempleado";
-    }
+    }*/
     
     @Autowired
     private IEmpleadoService servicioEmpleado;
