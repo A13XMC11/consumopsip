@@ -17,12 +17,16 @@ public class HorariosServiceImpl implements IHorariosService {
 	}
 
 	@Override
-	public List<HorariosResponseDto> listarHorarios() {
-		return webClient.get().uri("/horarios").retrieve().bodyToFlux(HorariosResponseDto.class).collectList().block();
+	public List<HorariosResponseDto> listarHorarios(String token) {
+		return webClient.get().uri("/horarios")
+				.header("Authorization", "Bearer " + token)
+				.retrieve().bodyToFlux(HorariosResponseDto.class).collectList().block();
 	}
 
 	@Override
-	public void guardarHorario(HorariosRequestDto nuevoHorario) {
-		webClient.post().uri("/horarios").bodyValue(nuevoHorario).retrieve().toBodilessEntity().block();
+	public void guardarHorario(HorariosRequestDto nuevoHorario, String token) {
+		webClient.post().uri("/horarios")
+				.header("Authorization", "Bearer " + token)
+				.bodyValue(nuevoHorario).retrieve().toBodilessEntity().block();
 	}
 }

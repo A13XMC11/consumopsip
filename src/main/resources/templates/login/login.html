@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Iniciar sesión | Asistencia Óptica América</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+</head>
+<body>
+	<div class="container d-flex align-items-center justify-content-center"
+		style="min-height: 100vh;">
+		<div class="card shadow-sm" style="max-width: 400px; width: 100%;">
+			<div class="card-body p-4">
+				<h1 class="h4 mb-3 text-center">Asistencia Óptica América</h1>
+				<p class="text-muted text-center mb-4">Ingresa con tu correo y
+					contraseña</p>
+
+				<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+				<form th:action="@{/login}" method="post">
+					<div class="mb-3">
+						<label class="form-label">Correo</label> <input type="email"
+							class="form-control" name="correo" required>
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Contraseña</label> <input
+							type="password" class="form-control" name="contrasena" required>
+					</div>
+					<button type="submit" class="btn btn-primary w-100">Ingresar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

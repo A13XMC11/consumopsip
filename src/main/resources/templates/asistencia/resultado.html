@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultado | Asistencia</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+</head>
+<body>
+	<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+		<div class="card shadow-sm text-center" style="max-width: 400px; width: 100%;">
+			<div class="card-body p-4">
+				<h1 class="h5 mb-3">Óptica América</h1>
+
+				<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+				<div th:if="${resultado != null}">
+					<div th:if="${resultado.valida}" class="alert alert-success">
+						<strong>¡Marcación registrada correctamente!</strong>
+					</div>
+					<div th:unless="${resultado.valida}" class="alert alert-warning">
+						<strong>Marcación registrada, pero no es válida:</strong>
+						<p class="mb-0" th:text="${resultado.observacion}"></p>
+					</div>
+					<p class="text-muted mb-0">
+						Tipo: <strong th:text="${resultado.tipo}"></strong><br>
+						Hora: <strong th:text="${resultado.horaMarcacion}"></strong>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
