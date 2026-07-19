@@ -10,29 +10,19 @@ import com.uisrael.consumopsip.service.IHorariosService;
 @Service
 public class HorariosServiceImpl implements IHorariosService {
 
-    private final WebClient webClient;
+	private final WebClient webClient;
 
-    public HorariosServiceImpl(WebClient webClient) {
-        this.webClient = webClient;
-    }
+	public HorariosServiceImpl(WebClient webClient) {
+		this.webClient = webClient;
+	}
 
-    @Override
-    public List<HorariosResponseDto> listarHorarios() {
-        return webClient.get()
-                .uri("/horarios")
-                .retrieve()
-                .bodyToFlux(HorariosResponseDto.class)
-                .collectList()
-                .block();
-    }
+	@Override
+	public List<HorariosResponseDto> listarHorarios() {
+		return webClient.get().uri("/horarios").retrieve().bodyToFlux(HorariosResponseDto.class).collectList().block();
+	}
 
-    @Override
-    public void guardarHorario(HorariosRequestDto nuevoHorario) {
-        webClient.post()
-                .uri("/horarios")
-                .bodyValue(nuevoHorario)
-                .retrieve()
-                .toBodilessEntity()
-                .block();
-    }
+	@Override
+	public void guardarHorario(HorariosRequestDto nuevoHorario) {
+		webClient.post().uri("/horarios").bodyValue(nuevoHorario).retrieve().toBodilessEntity().block();
+	}
 }
