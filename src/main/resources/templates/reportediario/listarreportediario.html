@@ -17,18 +17,23 @@
             <div class="container-fluid px-3 px-lg-4 py-4">
                 <div class="page-heading">
                     <div class="page-heading-copy">
-                        <span class="page-icon"><i class="bi bi-bar-chart-line"></i></span>
+                        <span class="page-icon"><i class="bi bi-clipboard-data"></i></span>
                         <div>
                             <p class="eyebrow mb-1">Asistencia</p>
                             <h1 class="h3 mb-1">Reporte Diario</h1>
                         </div>
                     </div>
+                    <div class="page-heading-actions">
+                        <a href="/reportediario/nuevo" class="btn btn-primary">
+                            <i class="bi bi-plus-lg me-1"></i> Nuevo Reporte
+                        </a>
+                    </div>
                 </div>
                 <section class="panel">
                     <div class="panel-header">
                         <div>
-                            <h2 class="h5 mb-1 section-title"><i class="bi bi-table"></i> Lista de Reportes</h2>
-                            <p class="text-muted mb-0">Reportes diarios de asistencia.</p>
+                            <h2 class="h5 mb-1 section-title"><i class="bi bi-table"></i> Lista de Reportes Diarios</h2>
+                            <p class="text-muted mb-0">Reportes diarios registrados en el sistema.</p>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -36,7 +41,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Empleado</th>
+                                    <th>ID Empleado</th>
                                     <th>Fecha</th>
                                     <th>Hora Entrada</th>
                                     <th>Hora Salida</th>
@@ -46,15 +51,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>2026-07-13</td>
-                                    <td>08:05</td>
-                                    <td>17:00</td>
-                                    <td><span class="badge text-bg-warning">Sí</span></td>
-                                    <td>5</td>
-                                    <td><span class="badge text-bg-success">No</span></td>
+                                <tr th:each="indice : ${listareportes}">
+                                    <td th:text="${indice.idReporte}"></td>
+                                    <td th:text="${indice.idEmpleado}"></td>
+                                    <td th:text="${indice.fechaReporte}"></td>
+                                    <td th:text="${indice.horaEntrada}"></td>
+                                    <td th:text="${indice.horaSalida}"></td>
+                                    <td>
+                                        <span th:if="${indice.tardanzaReporte}" class="badge text-bg-warning">Sí</span>
+                                        <span th:unless="${indice.tardanzaReporte}" class="badge text-bg-success">No</span>
+                                    </td>
+                                    <td th:text="${indice.minutosTardanza}"></td>
+                                    <td>
+                                        <span th:if="${indice.marcacionIncompleta}" class="badge text-bg-danger">Sí</span>
+                                        <span th:unless="${indice.marcacionIncompleta}" class="badge text-bg-success">No</span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

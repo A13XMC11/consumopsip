@@ -23,6 +23,11 @@
                             <h1 class="h3 mb-1">Roles</h1>
                         </div>
                     </div>
+                    <div class="page-heading-actions">
+                        <a href="/rol/nuevo" class="btn btn-primary">
+                            <i class="bi bi-plus-lg me-1"></i> Nuevo Rol
+                        </a>
+                    </div>
                 </div>
                 <section class="panel">
                     <div class="panel-header">
@@ -42,11 +47,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Administrador</td>
-                                    <td>Rol con acceso total</td>
-                                    <td>2026-01-01</td>
+                                <tr th:each="indice : ${listaroles}">
+                                    <td th:text="${indice.idRol}"></td>
+                                    <td th:text="${indice.nombreRol}"></td>
+                                    <td th:text="${indice.descripcionRol}"></td>
+                                    <td th:text="${indice.creadoRol}"></td>
                                 </tr>
                             </tbody>
                         </table>

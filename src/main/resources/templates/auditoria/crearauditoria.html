@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Nueva Auditoría | UISRAEL</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+</head>
+<body>
+<div class="admin-shell">
+    <div class="sidebar-backdrop" data-sidebar-close></div>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="admin-main">
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+        <main class="dashboard-content">
+            <div class="container-fluid px-3 px-lg-4 py-4">
+                <div class="page-heading">
+                    <div class="page-heading-copy">
+                        <span class="page-icon"><i class="bi bi-journal-plus"></i></span>
+                        <div>
+                            <p class="eyebrow mb-1">Asistencia</p>
+                            <h1 class="h3 mb-1">Nueva Auditoría</h1>
+                        </div>
+                    </div>
+                    <div class="page-heading-actions">
+                        <a href="/auditoria" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Volver
+                        </a>
+                    </div>
+                </div>
+                <section class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="h5 mb-1 section-title"><i class="bi bi-pencil-square"></i> Datos de la Auditoría</h2>
+                            <p class="text-muted mb-0">Complete los campos para registrar una nueva auditoría.</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <form th:action="@{/auditoria/guardar}" th:object="${auditoria}" method="post">
+                            <div class="mb-3">
+                                <label for="idEmpleado" class="form-label">ID Empleado</label>
+                                <input type="number" th:field="*{idEmpleado}" class="form-control" id="idEmpleado">
+                            </div>
+                            <div class="mb-3">
+                                <label for="accion" class="form-label">Acción</label>
+                                <input type="text" th:field="*{accion}" class="form-control" id="accion">
+                            </div>
+                            <div class="mb-3">
+                                <label for="tablaAfectada" class="form-label">Tabla Afectada</label>
+                                <input type="text" th:field="*{tablaAfectada}" class="form-control" id="tablaAfectada">
+                            </div>
+                            <div class="mb-3">
+                                <label for="registroId" class="form-label">ID Registro</label>
+                                <input type="number" th:field="*{registroId}" class="form-control" id="registroId">
+                            </div>
+                            <div class="mb-3">
+                                <label for="detalle" class="form-label">Detalle</label>
+                                <input type="text" th:field="*{detalle}" class="form-control" id="detalle">
+                            </div>
+                            <div class="mb-3">
+                                <label for="ip" class="form-label">IP</label>
+                                <input type="text" th:field="*{ip}" class="form-control" id="ip">
+                            </div>
+                            <div class="mb-4">
+                                <label for="fechaHora" class="form-label">Fecha y Hora</label>
+                                <input type="datetime-local" th:field="*{fechaHora}" class="form-control" id="fechaHora">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save me-1"></i> Guardar
+                            </button>
+                            <a href="/auditoria" class="btn btn-outline-secondary ms-2">Cancelar</a>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</div>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+</body>
+</html>
