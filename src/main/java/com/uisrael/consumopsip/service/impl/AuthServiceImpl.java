@@ -9,7 +9,7 @@ import com.uisrael.consumopsip.model.dto.response.LoginResponseDto;
 import com.uisrael.consumopsip.service.IAuthService;
 
 @Service
-public class AuthServiceImpl {
+public class AuthServiceImpl implements IAuthService{
 
 	private final WebClient webClient;
 
