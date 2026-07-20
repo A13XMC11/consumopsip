@@ -17,9 +17,10 @@ public class EmpleadoHorarioServiceImpl implements IEmpleadoHorarioService {
     }
 
     @Override
-    public List<EmpleadoHorarioResponseDto> listarEmpleadoHorarios() {
+    public List<EmpleadoHorarioResponseDto> listarEmpleadoHorarios(String token) {
         return webClient.get()
                 .uri("/empleadoHorario")
+                .header("Authorization", "Bearer " + token)
                 .retrieve()
                 .bodyToFlux(EmpleadoHorarioResponseDto.class)
                 .collectList()
@@ -27,9 +28,10 @@ public class EmpleadoHorarioServiceImpl implements IEmpleadoHorarioService {
     }
 
     @Override
-    public void guardarEmpleadoHorario(EmpleadoHorarioRequestDto nuevoEmpleadoHorario) {
+    public void guardarEmpleadoHorario(EmpleadoHorarioRequestDto nuevoEmpleadoHorario, String token) {
         webClient.post()
                 .uri("/empleadoHorario")
+                .header("Authorization", "Bearer " + token)
                 .bodyValue(nuevoEmpleadoHorario)
                 .retrieve()
                 .toBodilessEntity()

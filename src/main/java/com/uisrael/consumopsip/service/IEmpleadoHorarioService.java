@@ -6,6 +6,8 @@ import com.uisrael.consumopsip.model.dto.request.EmpleadoHorarioRequestDto;
 import com.uisrael.consumopsip.model.dto.response.EmpleadoHorarioResponseDto;
 
 public interface IEmpleadoHorarioService {
-	List<EmpleadoHorarioResponseDto> listarEmpleadoHorarios();
-    void guardarEmpleadoHorario(EmpleadoHorarioRequestDto nuevoEmpleadoHorario);
+
+	List<EmpleadoHorarioResponseDto> listarEmpleadoHorarios(String token);
+
+	void guardarEmpleadoHorario(EmpleadoHorarioRequestDto nuevoEmpleadoHorario, String token);
 }

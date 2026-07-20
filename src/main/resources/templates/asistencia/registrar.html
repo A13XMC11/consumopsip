@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrando asistencia...</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+</head>
+<body>
+	<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+		<div class="card shadow-sm text-center" style="max-width: 400px; width: 100%;">
+			<div class="card-body p-4">
+				<h1 class="h5 mb-3">Óptica América</h1>
+				<div class="spinner-border text-primary mb-3" role="status" id="spinner"></div>
+				<p id="mensaje">Obteniendo tu ubicación, no cierres esta página...</p>
+
+				<form id="formMarcacion" method="post" th:action="@{/asistencia/confirmar}">
+					<input type="hidden" name="token" th:value="${token}">
+					<input type="hidden" id="lat" name="lat">
+					<input type="hidden" id="lng" name="lng">
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(posicion) {
+				document.getElementById('lat').value = posicion.coords.latitude;
+				document.getElementById('lng').value = posicion.coords.longitude;
+				document.getElementById('formMarcacion').submit();
+			}, function(error) {
+				document.getElementById('spinner').style.display = 'none';
+				document.getElementById('mensaje').innerText = 'No se pudo obtener tu ubicación. Activa el GPS y el permiso de ubicación en tu navegador, luego vuelve a abrir el link del correo.';
+			});
+		} else {
+			document.getElementById('spinner').style.display = 'none';
+			document.getElementById('mensaje').innerText = 'Tu navegador no soporta geolocalización.';
+		}
+	</script>
+</body>
+</html>
