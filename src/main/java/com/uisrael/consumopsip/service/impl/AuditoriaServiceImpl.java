@@ -17,13 +17,14 @@ public class AuditoriaServiceImpl implements IAuditoriaService {
 	}
 
 	@Override
-	public List<AuditoriaResponseDto> listarAuditorias() {
-		return webClient.get().uri("/auditoria").retrieve().bodyToFlux(AuditoriaResponseDto.class).collectList()
-				.block();
+	public List<AuditoriaResponseDto> listarAuditorias(String token) {
+		return webClient.get().uri("/auditoria").header("Authorization", "Bearer " + token).retrieve()
+				.bodyToFlux(AuditoriaResponseDto.class).collectList().block();
 	}
 
 	@Override
-	public void guardarAuditoria(AuditoriaRequestDto nuevaAuditoria) {
-		webClient.post().uri("/auditoria").bodyValue(nuevaAuditoria).retrieve().toBodilessEntity().block();
+	public void guardarAuditoria(AuditoriaRequestDto nuevaAuditoria, String token) {
+		webClient.post().uri("/auditoria").header("Authorization", "Bearer " + token).bodyValue(nuevaAuditoria)
+				.retrieve().toBodilessEntity().block();
 	}
 }

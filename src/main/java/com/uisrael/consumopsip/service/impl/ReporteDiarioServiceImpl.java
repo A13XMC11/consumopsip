@@ -17,13 +17,14 @@ public class ReporteDiarioServiceImpl implements IReporteDiarioService {
 	}
 
 	@Override
-	public List<ReporteDiarioResponseDto> listarReportesDiarios() {
-		return webClient.get().uri("/reporteDiario").retrieve().bodyToFlux(ReporteDiarioResponseDto.class).collectList()
-				.block();
+	public List<ReporteDiarioResponseDto> listarReportesDiarios(String token) {
+		return webClient.get().uri("/reporteDiario").header("Authorization", "Bearer " + token).retrieve()
+				.bodyToFlux(ReporteDiarioResponseDto.class).collectList().block();
 	}
 
 	@Override
-	public void guardarReporteDiario(ReporteDiarioRequestDto nuevoReporte) {
-		webClient.post().uri("/reporteDiario").bodyValue(nuevoReporte).retrieve().toBodilessEntity().block();
+	public void guardarReporteDiario(ReporteDiarioRequestDto nuevoReporte, String token) {
+		webClient.post().uri("/reporteDiario").header("Authorization", "Bearer " + token).bodyValue(nuevoReporte)
+				.retrieve().toBodilessEntity().block();
 	}
 }
