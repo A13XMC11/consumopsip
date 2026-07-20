@@ -17,13 +17,28 @@ public class MarcacionesServiceImpl implements IMarcacionesService {
 	}
 
 	@Override
-	public List<MarcacionesResponseDto> listarMarcaciones() {
-		return webClient.get().uri("/marcaciones").retrieve().bodyToFlux(MarcacionesResponseDto.class).collectList()
-				.block();
+	public List<MarcacionesResponseDto> listarMarcaciones(String token) {
+		return webClient.get().uri("/marcaciones").header("Authorization", "Bearer " + token).retrieve()
+				.bodyToFlux(MarcacionesResponseDto.class).collectList().block();
 	}
 
 	@Override
-	public void guardarMarcacion(MarcacionesRequestDto nuevaMarcacion) {
-		webClient.post().uri("/marcaciones").bodyValue(nuevaMarcacion).retrieve().toBodilessEntity().block();
+	public void guardarMarcacion(MarcacionesRequestDto nuevaMarcacion, String token) {
+		webClient.post().uri("/marcaciones").header("Authorization", "Bearer " + token).bodyValue(nuevaMarcacion)
+				.retrieve().toBodilessEntity().block();
+	}
+
+	@Override
+	public void solicitarMarcacion(String token, String tipo) {
+		webClient.post().uri(uriBuilder -> uriBuilder.path("/marcaciones/solicitar").queryParam("tipo", tipo).build())
+				.header("Authorization", "Bearer " + token).retrieve().toBodilessEntity().block();
+	}
+
+	@Override
+	public MarcacionesResponseDto registrarMarcacion(String token, double lat, double lng) {
+		return webClient.get()
+				.uri(uriBuilder -> uriBuilder.path("/marcaciones/registrar").queryParam("token", token)
+						.queryParam("lat", lat).queryParam("lng", lng).build())
+				.retrieve().bodyToMono(MarcacionesResponseDto.class).block();
 	}
 }

@@ -18,12 +18,12 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
 	}
 
 	@Override
-	public List<EmpleadoResponseDto> listarEmpleados() {
-		return webClient.get().uri("/empleado").retrieve().bodyToFlux(EmpleadoResponseDto.class).collectList().block();
+	public List<EmpleadoResponseDto> listarEmpleados(String token) {
+		return webClient.get().uri("/empleado").header("Authorization", "Bearer " + token).retrieve().bodyToFlux(EmpleadoResponseDto.class).collectList().block();
 	}
 
 	@Override
-	public void guardarEmpleado(EmpleadoRequestDto nuevoEmpleado) {
-		webClient.post().uri("/empleado").bodyValue(nuevoEmpleado).retrieve().toBodilessEntity().block();
+	public void guardarEmpleado(EmpleadoRequestDto nuevoEmpleado, String token) {
+		webClient.post().uri("/empleado").header("Authorization", "Bearer " + token).bodyValue(nuevoEmpleado).retrieve().toBodilessEntity().block();
 	}
 }

@@ -12,6 +12,8 @@ import com.uisrael.consumopsip.model.dto.request.MarcacionesRequestDto;
 import com.uisrael.consumopsip.model.dto.response.MarcacionesResponseDto;
 import com.uisrael.consumopsip.service.IMarcacionesService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/marcaciones")
 public class MarcacionesController {
@@ -20,21 +22,32 @@ public class MarcacionesController {
     private IMarcacionesService servicioMarcaciones;
 
     @GetMapping
-    public String leerPagina(Model model) {
-        List<MarcacionesResponseDto> marcacionesBD = servicioMarcaciones.listarMarcaciones();
+    public String leerPagina(HttpSession session, Model model) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        List<MarcacionesResponseDto> marcacionesBD = servicioMarcaciones.listarMarcaciones(token);
         model.addAttribute("listamarcaciones", marcacionesBD);
         return "marcaciones/listarmarcaciones";
     }
 
     @GetMapping("/nuevo")
-    public String nuevaMarcacion(Model model) {
+    public String nuevaMarcacion(HttpSession session, Model model) {
+        if (session.getAttribute("token") == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("marcacion", new MarcacionesRequestDto());
         return "marcaciones/crearmarcacion";
     }
 
     @PostMapping("/guardar")
-    public String guardarMarcacion(@ModelAttribute MarcacionesRequestDto marcacion) {
-        servicioMarcaciones.guardarMarcacion(marcacion);
+    public String guardarMarcacion(@ModelAttribute MarcacionesRequestDto marcacion, HttpSession session) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        servicioMarcaciones.guardarMarcacion(marcacion, token);
         return "redirect:/marcaciones";
     }
 }

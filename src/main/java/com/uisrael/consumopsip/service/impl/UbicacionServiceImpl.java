@@ -17,13 +17,17 @@ public class UbicacionServiceImpl implements IUbicacionService {
 	}
 
 	@Override
-	public List<UbicacionResponseDto> listarUbicaciones() {
-		return webClient.get().uri("/ubicacion").retrieve().bodyToFlux(UbicacionResponseDto.class).collectList()
+	public List<UbicacionResponseDto> listarUbicaciones(String token) {
+		return webClient.get().uri("/ubicacion")
+				.header("Authorization", "Bearer " + token)
+				.retrieve().bodyToFlux(UbicacionResponseDto.class).collectList()
 				.block();
 	}
 
 	@Override
-	public void guardarUbicacion(UbicacionRequestDto nuevaUbicacion) {
-		webClient.post().uri("/ubicacion").bodyValue(nuevaUbicacion).retrieve().toBodilessEntity().block();
+	public void guardarUbicacion(UbicacionRequestDto nuevaUbicacion, String token) {
+		webClient.post().uri("/ubicacion")
+				.header("Authorization", "Bearer " + token)
+				.bodyValue(nuevaUbicacion).retrieve().toBodilessEntity().block();
 	}
 }

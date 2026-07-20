@@ -1,0 +1,74 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+<head>
+<title>Mi Asistencia | Óptica América</title>
+</head>
+<body>
+	<div layout:fragment="cargarpaginas">
+		<div class="page-heading">
+			<div class="page-heading-copy">
+				<span class="page-icon"><i class="bi bi-fingerprint"></i></span>
+				<div>
+					<p class="eyebrow mb-1">Bienvenido</p>
+					<h1 class="h3 mb-1" th:text="${nombre}">Mi Asistencia</h1>
+					<p class="text-muted mb-0">Presiona el botón correspondiente
+						para registrar tu asistencia. Te llegará un correo con un link que
+						debes abrir desde el establecimiento.</p>
+				</div>
+			</div>
+		</div>
+
+		<div th:if="${mensaje}" class="alert alert-success mt-3"
+			th:text="${mensaje}"></div>
+
+		<section class="panel mt-3">
+			<div class="panel-header">
+				<div>
+					<h2 class="h5 mb-1 section-title">
+						<i class="bi bi-clock-history"></i><span>Registrar
+							Marcación</span>
+					</h2>
+				</div>
+			</div>
+			<div class="row g-3 p-3">
+				<div class="col-6 col-md-3">
+					<form th:action="@{/miasistencia/solicitar}" method="post">
+						<input type="hidden" name="tipo" value="ENTRADA">
+						<button type="submit" class="btn btn-success w-100 py-3">
+							<i class="bi bi-box-arrow-in-right d-block fs-3 mb-1"></i>
+							Entrada
+						</button>
+					</form>
+				</div>
+				<div class="col-6 col-md-3">
+					<form th:action="@{/miasistencia/solicitar}" method="post">
+						<input type="hidden" name="tipo" value="SALIDA_ALMUERZO">
+						<button type="submit" class="btn btn-warning w-100 py-3">
+							<i class="bi bi-cup-hot d-block fs-3 mb-1"></i> Salida a Almuerzo
+						</button>
+					</form>
+				</div>
+				<div class="col-6 col-md-3">
+					<form th:action="@{/miasistencia/solicitar}" method="post">
+						<input type="hidden" name="tipo" value="REGRESO_ALMUERZO">
+						<button type="submit" class="btn btn-info w-100 py-3">
+							<i class="bi bi-arrow-return-left d-block fs-3 mb-1"></i> Regreso
+							de Almuerzo
+						</button>
+					</form>
+				</div>
+				<div class="col-6 col-md-3">
+					<form th:action="@{/miasistencia/solicitar}" method="post">
+						<input type="hidden" name="tipo" value="SALIDA">
+						<button type="submit" class="btn btn-danger w-100 py-3">
+							<i class="bi bi-box-arrow-right d-block fs-3 mb-1"></i> Salida
+						</button>
+					</form>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

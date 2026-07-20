@@ -6,7 +6,7 @@ import com.uisrael.consumopsip.model.dto.response.UbicacionResponseDto;
 
 public interface IUbicacionService {
 	
-    List<UbicacionResponseDto> listarUbicaciones();
-    
-    void guardarUbicacion(UbicacionRequestDto nuevaUbicacion);
+	List<UbicacionResponseDto> listarUbicaciones(String token);
+
+	void guardarUbicacion(UbicacionRequestDto nuevaUbicacion, String token);
 }

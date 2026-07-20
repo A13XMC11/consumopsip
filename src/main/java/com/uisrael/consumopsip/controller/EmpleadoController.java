@@ -14,34 +14,42 @@ import com.uisrael.consumopsip.model.dto.request.EmpleadoRequestDto;
 import com.uisrael.consumopsip.model.dto.response.EmpleadoResponseDto;
 import com.uisrael.consumopsip.service.IEmpleadoService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/empleado")
 public class EmpleadoController {
-
-    /*@GetMapping
-    public String leerPagina() {
-        return "empleado/listarempleado";
-    }*/
     
-    @Autowired
+	@Autowired
     private IEmpleadoService servicioEmpleado;
 
     @GetMapping
-    public String leerPagina(Model model) {
-        List<EmpleadoResponseDto> empleadosBD = servicioEmpleado.listarEmpleados();
+    public String leerPagina(HttpSession session, Model model) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        List<EmpleadoResponseDto> empleadosBD = servicioEmpleado.listarEmpleados(token);
         model.addAttribute("listaempleados", empleadosBD);
         return "empleado/listarempleado";
     }
 
     @GetMapping("/nuevo")
-    public String nuevoEmpleado(Model model) {
+    public String nuevoEmpleado(HttpSession session, Model model) {
+        if (session.getAttribute("token") == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("empleado", new EmpleadoRequestDto());
         return "empleado/crearempleado";
     }
 
     @PostMapping("/guardar")
-    public String guardarEmpleado(@ModelAttribute EmpleadoRequestDto empleado) {
-        servicioEmpleado.guardarEmpleado(empleado);
+    public String guardarEmpleado(@ModelAttribute EmpleadoRequestDto empleado, HttpSession session) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        servicioEmpleado.guardarEmpleado(empleado, token);
         return "redirect:/empleado";
     }
 }

@@ -12,6 +12,8 @@ import com.uisrael.consumopsip.model.dto.request.UbicacionRequestDto;
 import com.uisrael.consumopsip.model.dto.response.UbicacionResponseDto;
 import com.uisrael.consumopsip.service.IUbicacionService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/ubicacion")
 public class UbicacionController {
@@ -20,21 +22,32 @@ public class UbicacionController {
     private IUbicacionService servicioUbicacion;
 
     @GetMapping
-    public String leerPagina(Model model) {
-        List<UbicacionResponseDto> ubicacionesBD = servicioUbicacion.listarUbicaciones();
+    public String leerPagina(HttpSession session, Model model) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        List<UbicacionResponseDto> ubicacionesBD = servicioUbicacion.listarUbicaciones(token);
         model.addAttribute("listaubicaciones", ubicacionesBD);
         return "ubicacion/listarubicacion";
     }
 
     @GetMapping("/nuevo")
-    public String nuevaUbicacion(Model model) {
+    public String nuevaUbicacion(HttpSession session, Model model) {
+        if (session.getAttribute("token") == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("ubicacion", new UbicacionRequestDto());
         return "ubicacion/crearubicacion";
     }
 
     @PostMapping("/guardar")
-    public String guardarUbicacion(@ModelAttribute UbicacionRequestDto ubicacion) {
-        servicioUbicacion.guardarUbicacion(ubicacion);
+    public String guardarUbicacion(@ModelAttribute UbicacionRequestDto ubicacion, HttpSession session) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        servicioUbicacion.guardarUbicacion(ubicacion, token);
         return "redirect:/ubicacion";
     }
 }
