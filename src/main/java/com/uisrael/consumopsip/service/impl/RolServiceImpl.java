@@ -10,25 +10,21 @@ import com.uisrael.consumopsip.service.IRolService;
 @Service
 public class RolServiceImpl implements IRolService {
 
-    private final WebClient webClient;
+	private final WebClient webClient;
 
-    public RolServiceImpl(WebClient webClient) {
-        this.webClient = webClient;
-    }
+	public RolServiceImpl(WebClient webClient) {
+		this.webClient = webClient;
+	}
 
-    @Override
-    public List<RolResponseDto> listarRoles() {
-        return webClient.get()
-                .uri("/rol")
-                .retrieve()
-                .bodyToFlux(RolResponseDto.class)
-                .collectList()
-                .block();
-    }
+	@Override
+	public List<RolResponseDto> listarRoles(String token) {
+		return webClient.get().uri("/rol").header("Authorization", "Bearer " + token).retrieve()
+				.bodyToFlux(RolResponseDto.class).collectList().block();
+	}
 
-    @Override
-    public void guardarRol(RolRequestDto nuevoRol) {
-        webClient.post().uri("/rol")
-        .bodyValue(nuevoRol).retrieve().toBodilessEntity().block();
-    }
+	@Override
+	public void guardarRol(RolRequestDto nuevoRol, String token) {
+		webClient.post().uri("/rol").header("Authorization", "Bearer " + token).bodyValue(nuevoRol).retrieve()
+				.toBodilessEntity().block();
+	}
 }

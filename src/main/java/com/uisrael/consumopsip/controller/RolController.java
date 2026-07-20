@@ -12,29 +12,42 @@ import com.uisrael.consumopsip.model.dto.request.RolRequestDto;
 import com.uisrael.consumopsip.model.dto.response.RolResponseDto;
 import com.uisrael.consumopsip.service.IRolService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/rol")
 public class RolController {
 
-    @Autowired
-    private IRolService servicioRol;
+	@Autowired
+	private IRolService servicioRol;
 
-    @GetMapping
-    public String leerPagina(Model model) {
-        List<RolResponseDto> rolesBD = servicioRol.listarRoles();
-        model.addAttribute("listaroles", rolesBD);
-        return "rol/listarrol";
-    }
+	@GetMapping
+	public String leerPagina(HttpSession session, Model model) {
+		String token = (String) session.getAttribute("token");
+		if (token == null) {
+			return "redirect:/login";
+		}
+		List<RolResponseDto> rolesBD = servicioRol.listarRoles(token);
+		model.addAttribute("listaroles", rolesBD);
+		return "rol/listarrol";
+	}
 
-    @GetMapping("/nuevo")
-    public String nuevoRol(Model model) {
-        model.addAttribute("rol", new RolRequestDto());
-        return "rol/crearrol";
-    }
+	@GetMapping("/nuevo")
+	public String nuevoRol(HttpSession session, Model model) {
+		if (session.getAttribute("token") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("rol", new RolRequestDto());
+		return "rol/crearrol";
+	}
 
-    @PostMapping("/guardar")
-    public String guardarRol(@ModelAttribute RolRequestDto rol) {
-        servicioRol.guardarRol(rol);
-        return "redirect:/rol";
-    }
+	@PostMapping("/guardar")
+	public String guardarRol(@ModelAttribute RolRequestDto rol, HttpSession session) {
+		String token = (String) session.getAttribute("token");
+		if (token == null) {
+			return "redirect:/login";
+		}
+		servicioRol.guardarRol(rol, token);
+		return "redirect:/rol";
+	}
 }

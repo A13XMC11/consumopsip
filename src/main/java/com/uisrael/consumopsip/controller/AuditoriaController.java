@@ -12,29 +12,48 @@ import com.uisrael.consumopsip.model.dto.request.AuditoriaRequestDto;
 import com.uisrael.consumopsip.model.dto.response.AuditoriaResponseDto;
 import com.uisrael.consumopsip.service.IAuditoriaService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/auditoria")
 public class AuditoriaController {
 
-    @Autowired
-    private IAuditoriaService servicioAuditoria;
+	@Autowired
+	private IAuditoriaService servicioAuditoria;
 
-    @GetMapping
-    public String leerPagina(Model model) {
-        List<AuditoriaResponseDto> auditoriasBD = servicioAuditoria.listarAuditorias();
-        model.addAttribute("listaauditorias", auditoriasBD);
-        return "auditoria/listarauditoria";
-    }
+	@GetMapping
+	public String leerPagina(HttpSession session, Model model) {
+		String token = (String) session.getAttribute("token");
+		if (token == null) {
+			return "redirect:/login";
+		}
+		if (!"ADMIN".equals(session.getAttribute("rol"))) {
+			return "redirect:/miasistencia";
+		}
+		List<AuditoriaResponseDto> auditoriasBD = servicioAuditoria.listarAuditorias(token);
+		model.addAttribute("listaauditorias", auditoriasBD);
+		return "auditoria/listarauditoria";
+	}
 
-    @GetMapping("/nuevo")
-    public String nuevaAuditoria(Model model) {
-        model.addAttribute("auditoria", new AuditoriaRequestDto());
-        return "auditoria/crearauditoria";
-    }
+	@GetMapping("/nuevo")
+	public String nuevaAuditoria(HttpSession session, Model model) {
+		if (session.getAttribute("token") == null) {
+			return "redirect:/login";
+		}
+		if (!"ADMIN".equals(session.getAttribute("rol"))) {
+			return "redirect:/miasistencia";
+		}
+		model.addAttribute("auditoria", new AuditoriaRequestDto());
+		return "auditoria/crearauditoria";
+	}
 
-    @PostMapping("/guardar")
-    public String guardarAuditoria(@ModelAttribute AuditoriaRequestDto auditoria) {
-        servicioAuditoria.guardarAuditoria(auditoria);
-        return "redirect:/auditoria";
-    }
+	@PostMapping("/guardar")
+	public String guardarAuditoria(@ModelAttribute AuditoriaRequestDto auditoria, HttpSession session) {
+		String token = (String) session.getAttribute("token");
+		if (token == null) {
+			return "redirect:/login";
+		}
+		servicioAuditoria.guardarAuditoria(auditoria, token);
+		return "redirect:/auditoria";
+	}
 }
