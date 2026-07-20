@@ -1,56 +1,63 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/plantilla/plantillaui">
-<head><title>Horarios | Asistencia</title></head>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+<head>
+<title>Horarios | Asistencia</title>
+</head>
 <body>
-  <div layout:fragment="cargarpaginas">
-    <div class="page-heading">
-      <div class="page-heading-copy">
-        <span class="page-icon"><i class="bi bi-clock"></i></span>
-        <div>
-          <p class="eyebrow mb-1">Gestión</p>
-          <h1 class="h3 mb-1">Horarios</h1>
-          <p class="text-muted mb-0">Turnos registrados en el sistema.</p>
-        </div>
-      </div>
-      <div class="heading-actions">
-        <a class="btn btn-primary btn-sm" th:href="@{/horarios/nuevo}">
-          <i class="bi bi-plus-lg"></i> Nuevo Horario
-        </a>
-      </div>
-    </div>
-    <section class="panel mt-3">
-      <div class="panel-header">
-        <div>
-          <h2 class="h5 mb-1 section-title"><i class="bi bi-table"></i><span>Lista de Horarios</span></h2>
-          <p class="text-muted mb-0">Turnos y tolerancias configuradas.</p>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table align-middle mb-0">
-          <thead>
-            <tr>
-              <th>#</th><th>Nombre</th><th>Hora Entrada</th>
-              <th>Hora Salida</th><th>Tolerancia (min)</th><th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="indice : ${listahorarios}">
-              <td th:text="${indice.idHorario}"></td>
-              <td th:text="${indice.nombre}"></td>
-              <td th:text="${indice.horaEntrada}"></td>
-              <td th:text="${indice.horaSalida}"></td>
-              <td th:text="${indice.toleranciaMinutos}"></td>
-              <td>
-                <span th:if="${indice.estadoHorario}" class="badge text-bg-success">Activo</span>
-                <span th:unless="${indice.estadoHorario}" class="badge text-bg-secondary">Inactivo</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </div>
+	<div layout:fragment="cargarpaginas">
+		<div class="page-heading">
+			<div class="page-heading-copy">
+				<span class="page-icon"><i class="bi bi-clock"></i></span>
+				<div>
+					<p class="eyebrow mb-1">Gestión</p>
+					<h1 class="h3 mb-1">Horarios</h1>
+					<p class="text-muted mb-0">Horarios laborales configurados en el sistema.</p>
+				</div>
+			</div>
+			<div class="heading-actions">
+				<a class="btn btn-primary btn-sm" th:href="@{/horarios/nuevo}">
+					<i class="bi bi-plus-lg"></i> Nuevo Horario
+				</a>
+			</div>
+		</div>
+		<section class="panel mt-3">
+			<div class="panel-header">
+				<div>
+					<h2 class="h5 mb-1 section-title">
+						<i class="bi bi-table"></i><span>Lista de Horarios</span>
+					</h2>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table align-middle mb-0">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Nombre</th>
+							<th>Hora Entrada</th>
+							<th>Hora Salida</th>
+							<th>Tolerancia (min)</th>
+							<th>Estado</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="indice : ${listahorarios}">
+							<td th:text="${indice.idHorario}"></td>
+							<td th:text="${indice.nombre}"></td>
+							<td th:text="${indice.horaEntrada}"></td>
+							<td th:text="${indice.horaSalida}"></td>
+							<td th:text="${indice.toleranciaMinutos}"></td>
+							<td><span th:if="${indice.estadoHorario}"
+								class="badge text-bg-success">Activo</span> <span
+								th:unless="${indice.estadoHorario}"
+								class="badge text-bg-secondary">Inactivo</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
 </body>
 </html>
