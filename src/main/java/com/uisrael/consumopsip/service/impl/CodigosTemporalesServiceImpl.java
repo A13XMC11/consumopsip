@@ -17,9 +17,10 @@ public class CodigosTemporalesServiceImpl implements ICodigosTemporalesService {
     }
 
     @Override
-    public List<CodigosTemporalesResponseDto> listarCodigosTemporales() {
+    public List<CodigosTemporalesResponseDto> listarCodigosTemporales(String token) {
         return webClient.get()
                 .uri("/codigosTemporales")
+                .header("Authorization", "Bearer " + token)
                 .retrieve()
                 .bodyToFlux(CodigosTemporalesResponseDto.class)
                 .collectList()
@@ -27,9 +28,10 @@ public class CodigosTemporalesServiceImpl implements ICodigosTemporalesService {
     }
 
     @Override
-    public void guardarCodigoTemporal(CodigosTemporalesRequestDto nuevoCodigo) {
+    public void guardarCodigoTemporal(CodigosTemporalesRequestDto nuevoCodigo, String token) {
         webClient.post()
                 .uri("/codigosTemporales")
+                .header("Authorization", "Bearer " + token)
                 .bodyValue(nuevoCodigo)
                 .retrieve()
                 .toBodilessEntity()

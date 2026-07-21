@@ -5,6 +5,6 @@ import com.uisrael.consumopsip.model.dto.request.CodigosTemporalesRequestDto;
 import com.uisrael.consumopsip.model.dto.response.CodigosTemporalesResponseDto;
 
 public interface ICodigosTemporalesService {
-    List<CodigosTemporalesResponseDto> listarCodigosTemporales();
-    void guardarCodigoTemporal(CodigosTemporalesRequestDto nuevoCodigo);
+    List<CodigosTemporalesResponseDto> listarCodigosTemporales(String token);
+    void guardarCodigoTemporal(CodigosTemporalesRequestDto nuevoCodigo, String token);
 }

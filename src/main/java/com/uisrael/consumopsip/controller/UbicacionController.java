@@ -27,6 +27,9 @@ public class UbicacionController {
         if (token == null) {
             return "redirect:/login";
         }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
         List<UbicacionResponseDto> ubicacionesBD = servicioUbicacion.listarUbicaciones(token);
         model.addAttribute("listaubicaciones", ubicacionesBD);
         return "ubicacion/listarubicacion";
@@ -37,6 +40,9 @@ public class UbicacionController {
         if (session.getAttribute("token") == null) {
             return "redirect:/login";
         }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
         model.addAttribute("ubicacion", new UbicacionRequestDto());
         return "ubicacion/crearubicacion";
     }
@@ -46,6 +52,9 @@ public class UbicacionController {
         String token = (String) session.getAttribute("token");
         if (token == null) {
             return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
         }
         servicioUbicacion.guardarUbicacion(ubicacion, token);
         return "redirect:/ubicacion";

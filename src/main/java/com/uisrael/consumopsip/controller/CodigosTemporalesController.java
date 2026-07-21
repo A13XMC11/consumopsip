@@ -12,6 +12,8 @@ import com.uisrael.consumopsip.model.dto.request.CodigosTemporalesRequestDto;
 import com.uisrael.consumopsip.model.dto.response.CodigosTemporalesResponseDto;
 import com.uisrael.consumopsip.service.ICodigosTemporalesService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/codigostemporales")
 public class CodigosTemporalesController {
@@ -20,21 +22,41 @@ public class CodigosTemporalesController {
     private ICodigosTemporalesService servicioCodigosTemporales;
 
     @GetMapping
-    public String leerPagina(Model model) {
-        List<CodigosTemporalesResponseDto> codigosBD = servicioCodigosTemporales.listarCodigosTemporales();
+    public String leerPagina(HttpSession session, Model model) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
+        List<CodigosTemporalesResponseDto> codigosBD = servicioCodigosTemporales.listarCodigosTemporales(token);
         model.addAttribute("listacodigos", codigosBD);
         return "codigostemporales/listarcodigostemporales";
     }
 
     @GetMapping("/nuevo")
-    public String nuevoCodigo(Model model) {
+    public String nuevoCodigo(HttpSession session, Model model) {
+        if (session.getAttribute("token") == null) {
+            return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
         model.addAttribute("codigo", new CodigosTemporalesRequestDto());
         return "codigostemporales/crearcodigotemporal";
     }
 
     @PostMapping("/guardar")
-    public String guardarCodigo(@ModelAttribute CodigosTemporalesRequestDto codigo) {
-        servicioCodigosTemporales.guardarCodigoTemporal(codigo);
+    public String guardarCodigo(@ModelAttribute CodigosTemporalesRequestDto codigo, HttpSession session) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
+        servicioCodigosTemporales.guardarCodigoTemporal(codigo, token);
         return "redirect:/codigostemporales";
     }
 }

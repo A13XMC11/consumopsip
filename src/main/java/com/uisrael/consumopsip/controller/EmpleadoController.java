@@ -27,12 +27,20 @@ public class EmpleadoController {
 	
 	@Autowired
     private IRolService servicioRol;
+	
+	private boolean noEsAdminNiSupervisor(HttpSession session) {
+        String rol = (String) session.getAttribute("rol");
+        return !"ADMIN".equals(rol) && !"SUPERVISOR".equals(rol);
+    }
 
     @GetMapping
     public String leerPagina(HttpSession session, Model model) {
         String token = (String) session.getAttribute("token");
         if (token == null) {
             return "redirect:/login";
+        }
+        if (noEsAdminNiSupervisor(session)) {
+            return "redirect:/miasistencia";
         }
         List<EmpleadoResponseDto> empleadosBD = servicioEmpleado.listarEmpleados(token);
         model.addAttribute("listaempleados", empleadosBD);
@@ -45,6 +53,9 @@ public class EmpleadoController {
     	if (token == null) {
             return "redirect:/login";
         }
+    	if (noEsAdminNiSupervisor(session)) {
+            return "redirect:/miasistencia";
+        }
     	List<RolResponseDto> rolesBD = servicioRol.listarRoles(token);
         model.addAttribute("listaroles", rolesBD);
         model.addAttribute("empleado", new EmpleadoRequestDto());
@@ -56,6 +67,9 @@ public class EmpleadoController {
         String token = (String) session.getAttribute("token");
         if (token == null) {
             return "redirect:/login";
+        }
+        if (noEsAdminNiSupervisor(session)) {
+            return "redirect:/miasistencia";
         }
         servicioEmpleado.guardarEmpleado(empleado, token);
         return "redirect:/empleado";
