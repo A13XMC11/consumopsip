@@ -53,8 +53,12 @@
 								th:field="*{contrasenaEmpleado}">
 						</div>
 						<div class="col-md-6">
-							<label class="form-label">ID Rol</label> <input
-								class="form-control" type="number" th:field="*{idRol}">
+							<label class="form-label">Rol</label> <select class="form-select"
+								th:field="*{idRol}">
+								<option value="">Selecciona un rol...</option>
+								<option th:each="r : ${listaroles}" th:value="${r.idRol}"
+									th:text="${r.nombreRol}"></option>
+							</select>
 						</div>
 						<div class="col-md-6 d-flex align-items-end">
 							<div class="form-check mb-2">

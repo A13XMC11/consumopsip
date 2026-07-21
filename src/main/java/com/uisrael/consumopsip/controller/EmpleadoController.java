@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uisrael.consumopsip.model.dto.request.EmpleadoRequestDto;
 import com.uisrael.consumopsip.model.dto.response.EmpleadoResponseDto;
+import com.uisrael.consumopsip.model.dto.response.RolResponseDto;
 import com.uisrael.consumopsip.service.IEmpleadoService;
+import com.uisrael.consumopsip.service.IRolService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,6 +24,9 @@ public class EmpleadoController {
     
 	@Autowired
     private IEmpleadoService servicioEmpleado;
+	
+	@Autowired
+    private IRolService servicioRol;
 
     @GetMapping
     public String leerPagina(HttpSession session, Model model) {
@@ -36,9 +41,12 @@ public class EmpleadoController {
 
     @GetMapping("/nuevo")
     public String nuevoEmpleado(HttpSession session, Model model) {
-        if (session.getAttribute("token") == null) {
+    	String token = (String) session.getAttribute("token");
+    	if (token == null) {
             return "redirect:/login";
         }
+    	List<RolResponseDto> rolesBD = servicioRol.listarRoles(token);
+        model.addAttribute("listaroles", rolesBD);
         model.addAttribute("empleado", new EmpleadoRequestDto());
         return "empleado/crearempleado";
     }
