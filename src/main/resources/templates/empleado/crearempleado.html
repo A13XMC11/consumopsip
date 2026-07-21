@@ -55,7 +55,6 @@
 						<div class="col-md-6">
 							<label class="form-label">Rol</label> <select class="form-select"
 								th:field="*{idRol}">
-								<option value="">Selecciona un rol...</option>
 								<option th:each="r : ${listaroles}" th:value="${r.idRol}"
 									th:text="${r.nombreRol}"></option>
 							</select>
