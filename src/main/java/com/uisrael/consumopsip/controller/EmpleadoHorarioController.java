@@ -37,6 +37,9 @@ public class EmpleadoHorarioController {
         if (token == null) {
             return "redirect:/login";
         }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
         List<EmpleadoHorarioResponseDto> empleadoHorariosBD = servicioEmpleadoHorario.listarEmpleadoHorarios(token);
         model.addAttribute("listaempleadohorarios", empleadoHorariosBD);
         return "empleadohorario/listarempleadohorario";
@@ -47,6 +50,9 @@ public class EmpleadoHorarioController {
     	String token = (String) session.getAttribute("token");
         if (token == null) {
             return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
         }
         List<EmpleadoResponseDto> empleadosBD = servicioEmpleado.listarEmpleados(token);
         List<HorariosResponseDto> horariosBD = servicioHorarios.listarHorarios(token);
@@ -61,6 +67,9 @@ public class EmpleadoHorarioController {
         String token = (String) session.getAttribute("token");
         if (token == null) {
             return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
         }
         servicioEmpleadoHorario.guardarEmpleadoHorario(empleadoHorario, token);
         return "redirect:/empleadohorario";

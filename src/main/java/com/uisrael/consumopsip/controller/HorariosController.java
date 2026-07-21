@@ -27,6 +27,9 @@ public class HorariosController {
         if (token == null) {
             return "redirect:/login";
         }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
         List<HorariosResponseDto> horariosBD = servicioHorarios.listarHorarios(token);
         model.addAttribute("listahorarios", horariosBD);
         return "horarios/listarhorarios";
@@ -37,6 +40,9 @@ public class HorariosController {
         if (session.getAttribute("token") == null) {
             return "redirect:/login";
         }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
         model.addAttribute("horario", new HorariosRequestDto());
         return "horarios/crearhorario";
     }
@@ -46,6 +52,9 @@ public class HorariosController {
         String token = (String) session.getAttribute("token");
         if (token == null) {
             return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
         }
         servicioHorarios.guardarHorario(horario, token);
         return "redirect:/horarios";
