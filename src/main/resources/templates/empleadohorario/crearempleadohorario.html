@@ -16,42 +16,53 @@
 				</div>
 			</div>
 			<div class="heading-actions">
-				<a class="btn btn-outline-secondary btn-sm" th:href="@{/empleadohorario}">
-					<i class="bi bi-arrow-left"></i> Volver
+				<a class="btn btn-outline-secondary btn-sm"
+					th:href="@{/empleadohorario}"> <i class="bi bi-arrow-left"></i>
+					Volver
 				</a>
 			</div>
 		</div>
 		<section class="row g-3">
 			<div class="col-12 col-xl-8">
-				<form class="panel" th:action="@{/empleadohorario/guardar}" th:object="${empleadohorario}" method="post">
+				<form class="panel" th:action="@{/empleadohorario/guardar}"
+					th:object="${empleadohorario}" method="post">
 					<div class="panel-header">
 						<div>
 							<h2 class="h5 mb-1 section-title">
-								<i class="bi bi-calendar-check"></i><span>Datos de la Asignación</span>
+								<i class="bi bi-calendar-check"></i><span>Datos de la
+									Asignación</span>
 							</h2>
 						</div>
 					</div>
 					<div class="row g-3">
 						<div class="col-md-6">
-							<label class="form-label">ID Empleado</label>
-							<input class="form-control" type="number" th:field="*{idEmpleado}">
+							<label class="form-label">Empleado</label> <select
+								class="form-select" th:field="*{idEmpleado}">
+								<option th:each="e : ${listaempleados}"
+									th:value="${e.idEmpleado}"
+									th:text="${e.nombreEmpleado + ' ' + e.apellidosEmpleado}"></option>
+							</select>
 						</div>
 						<div class="col-md-6">
-							<label class="form-label">ID Horario</label>
-							<input class="form-control" type="number" th:field="*{idHorario}">
+							<label class="form-label">Horario</label> <select
+								class="form-select" th:field="*{idHorario}">
+								<option th:each="h : ${listahorarios}" th:value="${h.idHorario}"
+									th:text="${h.nombre}"></option>
+							</select>
 						</div>
 						<div class="col-md-6">
-							<label class="form-label">Fecha Inicio</label>
-							<input class="form-control" type="date" th:field="*{fechaInicio}">
+							<label class="form-label">Fecha Inicio</label> <input
+								class="form-control" type="date" th:field="*{fechaInicio}">
 						</div>
 						<div class="col-md-6">
-							<label class="form-label">Fecha Fin</label>
-							<input class="form-control" type="date" th:field="*{fechaFin}">
+							<label class="form-label">Fecha Fin</label> <input
+								class="form-control" type="date" th:field="*{fechaFin}">
 						</div>
 						<div class="col-12">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" th:field="*{estadoEmpleadoHorario}">
-								<label class="form-check-label">Activo</label>
+								<input class="form-check-input" type="checkbox"
+									th:field="*{estadoEmpleadoHorario}"> <label
+									class="form-check-label">Activo</label>
 							</div>
 						</div>
 					</div>
