@@ -27,6 +27,11 @@ public class RolController {
 		if (token == null) {
 			return "redirect:/login";
 		}
+
+		if (!"ADMIN".equals(session.getAttribute("rol"))) {
+			return "redirect:/miasistencia";
+		}
+
 		List<RolResponseDto> rolesBD = servicioRol.listarRoles(token);
 		model.addAttribute("listaroles", rolesBD);
 		return "rol/listarrol";
@@ -37,6 +42,11 @@ public class RolController {
 		if (session.getAttribute("token") == null) {
 			return "redirect:/login";
 		}
+
+		if (!"ADMIN".equals(session.getAttribute("rol"))) {
+			return "redirect:/miasistencia";
+		}
+
 		model.addAttribute("rol", new RolRequestDto());
 		return "rol/crearrol";
 	}
@@ -47,6 +57,11 @@ public class RolController {
 		if (token == null) {
 			return "redirect:/login";
 		}
+
+		if (!"ADMIN".equals(session.getAttribute("rol"))) {
+			return "redirect:/miasistencia";
+		}
+
 		servicioRol.guardarRol(rol, token);
 		return "redirect:/rol";
 	}
