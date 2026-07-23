@@ -1,6 +1,9 @@
 package com.uisrael.consumopsip.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +45,20 @@ public class EmpleadoHorarioController {
         }
         List<EmpleadoHorarioResponseDto> empleadoHorariosBD = servicioEmpleadoHorario.listarEmpleadoHorarios(token);
         model.addAttribute("listaempleadohorarios", empleadoHorariosBD);
+        
+        List<EmpleadoResponseDto> empleadosBD = servicioEmpleado.listarEmpleados(token);
+        Map<Integer, String> mapaEmpleados = new HashMap<>();
+        for (EmpleadoResponseDto e : empleadosBD) {
+            mapaEmpleados.put(e.getIdEmpleado(), e.getNombreEmpleado() + " " + e.getApellidosEmpleado());
+        }
+        model.addAttribute("mapaEmpleados", mapaEmpleados);
+
+        List<HorariosResponseDto> horariosBD = servicioHorarios.listarHorarios(token);
+        Map<Integer, String> mapaHorarios = new HashMap<>();
+        for (HorariosResponseDto h : horariosBD) {
+            mapaHorarios.put(h.getIdHorario(), h.getNombre());
+        }
+        model.addAttribute("mapaHorarios", mapaHorarios);
         return "empleadohorario/listarempleadohorario";
     }
 

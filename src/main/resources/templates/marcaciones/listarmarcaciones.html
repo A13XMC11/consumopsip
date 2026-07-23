@@ -1,56 +1,64 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/plantilla/plantillaui">
-<head><title>Marcaciones | Asistencia</title></head>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+<head>
+<title>Marcaciones | Asistencia</title>
+</head>
 <body>
-  <div layout:fragment="cargarpaginas">
-    <div class="page-heading">
-      <div class="page-heading-copy">
-        <span class="page-icon"><i class="bi bi-fingerprint"></i></span>
-        <div>
-          <p class="eyebrow mb-1">Registro</p>
-          <h1 class="h3 mb-1">Marcaciones</h1>
-          <p class="text-muted mb-0">Entradas y salidas del personal.</p>
-        </div>
-      </div>
-      <div class="heading-actions">
-        <a class="btn btn-primary btn-sm" th:href="@{/marcaciones/nuevo}">
-          <i class="bi bi-plus-lg"></i> Nueva Marcación
-        </a>
-      </div>
-    </div>
-    <section class="panel mt-3">
-      <div class="panel-header">
-        <div>
-          <h2 class="h5 mb-1 section-title"><i class="bi bi-table"></i><span>Lista de Marcaciones</span></h2>
-          <p class="text-muted mb-0">Registros de entrada y salida.</p>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table align-middle mb-0">
-          <thead>
-            <tr>
-              <th>#</th><th>ID Empleado</th><th>Tipo</th>
-              <th>Fecha</th><th>Hora</th><th>Válida</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="indice : ${listamarcaciones}">
-              <td th:text="${indice.idMarcaciones}"></td>
-              <td th:text="${indice.idEmpleado}"></td>
-              <td th:text="${indice.tipo}"></td>
-              <td th:text="${indice.fechaMarcacion}"></td>
-              <td th:text="${indice.horaMarcacion}"></td>
-              <td>
-                <span th:if="${indice.valida}" class="badge text-bg-success">Sí</span>
-                <span th:unless="${indice.valida}" class="badge text-bg-danger">No</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </div>
+	<div layout:fragment="cargarpaginas">
+		<div class="page-heading">
+			<div class="page-heading-copy">
+				<span class="page-icon"><i class="bi bi-fingerprint"></i></span>
+				<div>
+					<p class="eyebrow mb-1">Registro</p>
+					<h1 class="h3 mb-1">Marcaciones</h1>
+					<p class="text-muted mb-0">Entradas y salidas del personal.</p>
+				</div>
+			</div>
+			<div class="heading-actions">
+				<a class="btn btn-primary btn-sm" th:href="@{/marcaciones/nuevo}">
+					<i class="bi bi-plus-lg"></i> Nueva Marcación
+				</a>
+			</div>
+		</div>
+		<section class="panel mt-3">
+			<div class="panel-header">
+				<div>
+					<h2 class="h5 mb-1 section-title">
+						<i class="bi bi-table"></i><span>Lista de Marcaciones</span>
+					</h2>
+					<p class="text-muted mb-0">Registros de entrada y salida.</p>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table align-middle mb-0">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Empleado</th>
+							<th>Tipo</th>
+							<th>Fecha</th>
+							<th>Hora</th>
+							<th>Válida</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="indice : ${listamarcaciones}">
+							<td th:text="${indice.idMarcaciones}"></td>
+							<td th:text="${mapaEmpleados[indice.idEmpleado]}"></td>
+							<td th:text="${indice.tipo}"></td>
+							<td th:text="${indice.fechaMarcacion}"></td>
+							<td th:text="${indice.horaMarcacion}"></td>
+							<td><span th:if="${indice.valida}"
+								class="badge text-bg-success">Sí</span> <span
+								th:unless="${indice.valida}" class="badge text-bg-danger">No</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
 </body>
 </html>

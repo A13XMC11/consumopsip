@@ -1,56 +1,65 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/plantilla/plantillaui">
-<head><title>Asignación Horarios | Asistencia</title></head>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/plantilla/plantillaui">
+<head>
+<title>Asignación Horarios | Asistencia</title>
+</head>
 <body>
-  <div layout:fragment="cargarpaginas">
-    <div class="page-heading">
-      <div class="page-heading-copy">
-        <span class="page-icon"><i class="bi bi-calendar-check"></i></span>
-        <div>
-          <p class="eyebrow mb-1">Gestión</p>
-          <h1 class="h3 mb-1">Asignación de Horarios</h1>
-          <p class="text-muted mb-0">Turnos asignados por empleado.</p>
-        </div>
-      </div>
-      <div class="heading-actions">
-        <a class="btn btn-primary btn-sm" th:href="@{/empleadohorario/nuevo}">
-          <i class="bi bi-plus-lg"></i> Nueva Asignación
-        </a>
-      </div>
-    </div>
-    <section class="panel mt-3">
-      <div class="panel-header">
-        <div>
-          <h2 class="h5 mb-1 section-title"><i class="bi bi-table"></i><span>Lista de Asignaciones</span></h2>
-          <p class="text-muted mb-0">Turnos asignados a empleados.</p>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table align-middle mb-0">
-          <thead>
-            <tr>
-              <th>#</th><th>ID Empleado</th><th>ID Horario</th>
-              <th>Fecha Inicio</th><th>Fecha Fin</th><th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="indice : ${listaempleadohorarios}">
-              <td th:text="${indice.idAsignacion}"></td>
-              <td th:text="${indice.idEmpleado}"></td>
-              <td th:text="${indice.idHorario}"></td>
-              <td th:text="${indice.fechaInicio}"></td>
-              <td th:text="${indice.fechaFin}"></td>
-              <td>
-                <span th:if="${indice.estadoEmpleadoHorario}" class="badge text-bg-success">Activo</span>
-                <span th:unless="${indice.estadoEmpleadoHorario}" class="badge text-bg-secondary">Inactivo</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </div>
+	<div layout:fragment="cargarpaginas">
+		<div class="page-heading">
+			<div class="page-heading-copy">
+				<span class="page-icon"><i class="bi bi-calendar-check"></i></span>
+				<div>
+					<p class="eyebrow mb-1">Gestión</p>
+					<h1 class="h3 mb-1">Asignación de Horarios</h1>
+					<p class="text-muted mb-0">Turnos asignados por empleado.</p>
+				</div>
+			</div>
+			<div class="heading-actions">
+				<a class="btn btn-primary btn-sm"
+					th:href="@{/empleadohorario/nuevo}"> <i class="bi bi-plus-lg"></i>
+					Nueva Asignación
+				</a>
+			</div>
+		</div>
+		<section class="panel mt-3">
+			<div class="panel-header">
+				<div>
+					<h2 class="h5 mb-1 section-title">
+						<i class="bi bi-table"></i><span>Lista de Asignaciones</span>
+					</h2>
+					<p class="text-muted mb-0">Turnos asignados a empleados.</p>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table align-middle mb-0">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Empleado</th>
+							<th>Horario</th>
+							<th>Fecha Inicio</th>
+							<th>Fecha Fin</th>
+							<th>Estado</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="indice : ${listaempleadohorarios}">
+							<td th:text="${indice.idAsignacion}"></td>
+							<td th:text="${mapaEmpleados[indice.idEmpleado]}"></td>
+							<td th:text="${mapaHorarios[indice.idHorario]}"></td>
+							<td th:text="${indice.fechaInicio}"></td>
+							<td th:text="${indice.fechaFin}"></td>
+							<td><span th:if="${indice.estadoEmpleadoHorario}"
+								class="badge text-bg-success">Activo</span> <span
+								th:unless="${indice.estadoEmpleadoHorario}"
+								class="badge text-bg-secondary">Inactivo</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
 </body>
 </html>

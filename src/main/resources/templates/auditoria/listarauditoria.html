@@ -30,7 +30,7 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>ID Empleado</th>
+							<th>Empleado</th>
 							<th>Acción</th>
 							<th>Tabla</th>
 							<th>Detalle</th>
@@ -41,7 +41,7 @@
 					<tbody>
 						<tr th:each="indice : ${listaauditorias}">
 							<td th:text="${indice.idAuditoria}"></td>
-							<td th:text="${indice.idEmpleado}"></td>
+							<td th:text="${mapaEmpleados[indice.idEmpleado]}"></td>
 							<td th:text="${indice.accion}"></td>
 							<td th:text="${indice.tablaAfectada}"></td>
 							<td th:text="${indice.detalle}"></td>

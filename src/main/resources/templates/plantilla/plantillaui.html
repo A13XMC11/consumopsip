@@ -1,79 +1,104 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asistencia</title>
-  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-  <link rel="stylesheet" th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
-  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asistencia</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
 </head>
 
 <body>
-  <div class="admin-shell">
-    <div class="sidebar-backdrop" data-sidebar-close></div>
+	<div class="admin-shell">
+		<div class="sidebar-backdrop" data-sidebar-close></div>
 
-    <aside class="admin-sidebar" id="adminSidebar" aria-label="Main navigation">
-      <div class="sidebar-header">
-        <a class="brand-mark" href="/">
-          <span class="brand-icon"><i class="bi bi-grid-1x2-fill"></i></span>
-          <span class="brand-copy">
-            <span class="brand-title">Asistencia</span>
-            <span class="brand-subtitle">Óptica América</span>
-          </span>
-        </a>
-      </div>
-      <nav class="sidebar-nav">
-        <a class="nav-link" href="/rol"><span class="nav-icon"><i class="bi bi-shield-lock"></i></span><span class="nav-text">Roles</span></a>
-        <a class="nav-link" href="/empleado"><span class="nav-icon"><i class="bi bi-people"></i></span><span class="nav-text">Empleados</span></a>
-        <a class="nav-link" href="/horarios"><span class="nav-icon"><i class="bi bi-clock"></i></span><span class="nav-text">Horarios</span></a>
-        <a class="nav-link" href="/empleadohorario"><span class="nav-icon"><i class="bi bi-calendar-check"></i></span><span class="nav-text">Asignación Horarios</span></a>
-        <a class="nav-link" href="/ubicacion"><span class="nav-icon"><i class="bi bi-geo-alt"></i></span><span class="nav-text">Ubicaciones</span></a>
-        <a class="nav-link" href="/codigostemporales"><span class="nav-icon"><i class="bi bi-key"></i></span><span class="nav-text">Códigos Temporales</span></a>
-        <a class="nav-link" href="/marcaciones"><span class="nav-icon"><i class="bi bi-fingerprint"></i></span><span class="nav-text">Marcaciones</span></a>
-        <a class="nav-link" href="/reportediario"><span class="nav-icon"><i class="bi bi-clipboard-data"></i></span><span class="nav-text">Reporte Diario</span></a>
-        <a class="nav-link" href="/auditoria"><span class="nav-icon"><i class="bi bi-journal-text"></i></span><span class="nav-text">Auditoría</span></a>
-      </nav>
-      <div class="sidebar-footer">
-        <span class="status-dot"></span>
-        <span class="sidebar-footer-text">Sistema activo</span>
-      </div>
-    </aside>
+		<aside class="admin-sidebar" id="adminSidebar"
+			aria-label="Main navigation">
+			<div class="sidebar-header">
+				<a class="brand-mark" href="/"> <span class="brand-icon"><i
+						class="bi bi-grid-1x2-fill"></i></span> <span class="brand-copy">
+						<span class="brand-title">Asistencia</span> <span
+						class="brand-subtitle">Óptica América</span>
+				</span>
+				</a>
+			</div>
+			<nav class="sidebar-nav">
+				<a class="nav-link" href="/miasistencia"><span class="nav-icon"><i
+						class="bi bi-fingerprint"></i></span><span class="nav-text">Mi
+						Asistencia</span></a> <a class="nav-link" href="/rol"
+					th:if="${session.rol == 'ADMIN'}"><span class="nav-icon"><i
+						class="bi bi-shield-lock"></i></span><span class="nav-text">Roles</span></a>
+				<a class="nav-link" href="/empleado"
+					th:if="${session.rol == 'ADMIN' or session.rol == 'SUPERVISOR'}"><span
+					class="nav-icon"><i class="bi bi-people"></i></span><span
+					class="nav-text">Empleados</span></a> <a class="nav-link"
+					href="/horarios" th:if="${session.rol == 'ADMIN'}"><span
+					class="nav-icon"><i class="bi bi-clock"></i></span><span
+					class="nav-text">Horarios</span></a> <a class="nav-link"
+					href="/empleadohorario" th:if="${session.rol == 'ADMIN'}"><span
+					class="nav-icon"><i class="bi bi-calendar-check"></i></span><span
+					class="nav-text">Asignación Horarios</span></a> <a class="nav-link"
+					href="/ubicacion" th:if="${session.rol == 'ADMIN'}"><span
+					class="nav-icon"><i class="bi bi-geo-alt"></i></span><span
+					class="nav-text">Ubicaciones</span></a> <a class="nav-link"
+					href="/codigostemporales" th:if="${session.rol == 'ADMIN'}"><span
+					class="nav-icon"><i class="bi bi-key"></i></span><span
+					class="nav-text">Códigos Temporales</span></a> <a class="nav-link"
+					href="/marcaciones"><span class="nav-icon"><i
+						class="bi bi-fingerprint"></i></span><span class="nav-text">Marcaciones</span></a>
+				<a class="nav-link" href="/reportediario"><span class="nav-icon"><i
+						class="bi bi-clipboard-data"></i></span><span class="nav-text">Reporte
+						Diario</span></a> <a class="nav-link" href="/auditoria"
+					th:if="${session.rol == 'ADMIN'}"><span class="nav-icon"><i
+						class="bi bi-journal-text"></i></span><span class="nav-text">Auditoría</span></a>
+			</nav>
+			<div class="sidebar-footer">
+				<span class="status-dot"></span> <span class="sidebar-footer-text">Sistema
+					activo</span>
+			</div>
+		</aside>
 
-    <div class="admin-main">
-      <nav class="navbar admin-navbar navbar-expand bg-white">
-        <div class="container-fluid px-3 px-lg-4">
-          <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="adminSidebar" aria-expanded="true" aria-label="Toggle sidebar">
-            <span></span><span></span><span></span>
-          </button>
-          <div class="navbar-actions ms-auto">
-            <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme">
-              <i class="bi bi-moon-stars" data-theme-icon></i>
-            </button>
-          </div>
-        </div>
-      </nav>
+		<div class="admin-main">
+			<nav class="navbar admin-navbar navbar-expand bg-white">
+				<div class="container-fluid px-3 px-lg-4">
+					<button class="sidebar-toggle" type="button" data-sidebar-toggle
+						aria-controls="adminSidebar" aria-expanded="true"
+						aria-label="Toggle sidebar">
+						<span></span><span></span><span></span>
+					</button>
+					<div class="navbar-actions ms-auto">
+						<button class="icon-button theme-toggle" type="button"
+							data-theme-toggle aria-label="Switch color theme">
+							<i class="bi bi-moon-stars" data-theme-icon></i>
+						</button>
+						<a class="btn btn-outline-secondary btn-sm ms-2"
+							th:href="@{/logout}"> <i class="bi bi-box-arrow-right"></i>
+							Cerrar sesión
+						</a>
+					</div>
+				</div>
+			</nav>
 
-      <main class="dashboard-content">
-        <div class="container-fluid px-3 px-lg-4 py-4">
-          <div layout:fragment="cargarpaginas">
-            
-          </div>
-        </div>
-      </main>
+			<main class="dashboard-content">
+				<div class="container-fluid px-3 px-lg-4 py-4">
+					<div layout:fragment="cargarpaginas"></div>
+				</div>
+			</main>
 
-      <footer class="admin-footer">
-        <div class="container-fluid px-3 px-lg-4">
-          <span>Sistema de Asistencia — Óptica América</span>
-          <span>UISRAEL 2025</span>
-        </div>
-      </footer>
-    </div>
-  </div>
+			<footer class="admin-footer">
+				<div class="container-fluid px-3 px-lg-4">
+					<span>Sistema de Asistencia — Óptica América</span> <span>UISRAEL
+						2025</span>
+				</div>
+			</footer>
+		</div>
+	</div>
 
-  <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{/assets/js/main.js}"></script>
+	<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/assets/js/main.js}"></script>
 </body>
 </html>

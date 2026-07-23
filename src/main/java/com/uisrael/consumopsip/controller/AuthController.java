@@ -19,6 +19,14 @@ public class AuthController {
 	public AuthController(IAuthService servicioAuth) {
 		this.servicioAuth = servicioAuth;
 	}
+	
+	@GetMapping("/")
+	public String raiz(HttpSession session) {
+		if (session.getAttribute("token") != null) {
+			return "redirect:/miasistencia";
+		}
+		return "redirect:/login";
+	}
 
 	@GetMapping("/login")
 	public String mostrarLogin() {

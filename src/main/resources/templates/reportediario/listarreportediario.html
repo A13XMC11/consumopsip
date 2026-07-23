@@ -31,7 +31,7 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>ID Empleado</th>
+							<th>Empleado</th>
 							<th>Fecha</th>
 							<th>Hora Entrada</th>
 							<th>Hora Salida</th>
@@ -43,7 +43,7 @@
 					<tbody>
 						<tr th:each="indice : ${listareportes}">
 							<td th:text="${indice.idReporte}"></td>
-							<td th:text="${indice.idEmpleado}"></td>
+							<td th:text="${mapaEmpleados[indice.idEmpleado]}"></td>
 							<td th:text="${indice.fechaReporte}"></td>
 							<td th:text="${indice.horaEntrada}"></td>
 							<td th:text="${indice.horaSalida}"></td>

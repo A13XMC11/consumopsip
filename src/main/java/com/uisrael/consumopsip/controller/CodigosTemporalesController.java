@@ -1,6 +1,9 @@
 package com.uisrael.consumopsip.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.uisrael.consumopsip.model.dto.request.CodigosTemporalesRequestDto;
 import com.uisrael.consumopsip.model.dto.response.CodigosTemporalesResponseDto;
+import com.uisrael.consumopsip.model.dto.response.EmpleadoResponseDto;
 import com.uisrael.consumopsip.service.ICodigosTemporalesService;
+import com.uisrael.consumopsip.service.IEmpleadoService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -20,6 +25,9 @@ public class CodigosTemporalesController {
 
     @Autowired
     private ICodigosTemporalesService servicioCodigosTemporales;
+    
+    @Autowired
+    private IEmpleadoService servicioEmpleado;
 
     @GetMapping
     public String leerPagina(HttpSession session, Model model) {
@@ -32,6 +40,13 @@ public class CodigosTemporalesController {
         }
         List<CodigosTemporalesResponseDto> codigosBD = servicioCodigosTemporales.listarCodigosTemporales(token);
         model.addAttribute("listacodigos", codigosBD);
+
+        List<EmpleadoResponseDto> empleadosBD = servicioEmpleado.listarEmpleados(token);
+        Map<Integer, String> mapaEmpleados = new HashMap<>();
+        for (EmpleadoResponseDto e : empleadosBD) {
+            mapaEmpleados.put(e.getIdEmpleado(), e.getNombreEmpleado() + " " + e.getApellidosEmpleado());
+        }
+        model.addAttribute("mapaEmpleados", mapaEmpleados);
         return "codigostemporales/listarcodigostemporales";
     }
 

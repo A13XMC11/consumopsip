@@ -31,14 +31,14 @@
         <table class="table align-middle mb-0">
           <thead>
             <tr>
-              <th>#</th><th>ID Empleado</th><th>Código</th>
+              <th>#</th><th>Empleado</th><th>Código</th>
               <th>Tipo</th><th>Generado</th><th>Expira</th><th>Usado</th>
             </tr>
           </thead>
           <tbody>
             <tr th:each="indice : ${listacodigos}">
               <td th:text="${indice.idCodigo}"></td>
-              <td th:text="${indice.idEmpleado}"></td>
+              <td th:text="${mapaEmpleados[indice.idEmpleado]}"></td>
               <td th:text="${indice.codigo}"></td>
               <td th:text="${indice.tipo}"></td>
               <td th:text="${indice.generadoEn}"></td>
