@@ -37,4 +37,22 @@ public class EmpleadoHorarioServiceImpl implements IEmpleadoHorarioService {
                 .toBodilessEntity()
                 .block();
     }
+
+    @Override
+    public EmpleadoHorarioResponseDto buscarPorId(int idAsignacion, String token) {
+        return listarEmpleadoHorarios(token).stream()
+                .filter(eh -> eh.getIdAsignacion() == idAsignacion)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public void eliminarEmpleadoHorario(int idAsignacion, String token) {
+        webClient.delete()
+                .uri("/empleadoHorario/{idAsignacion}", idAsignacion)
+                .header("Authorization", "Bearer " + token)
+                .retrieve()
+                .toBodilessEntity()
+                .block();
+    }
 }

@@ -13,11 +13,13 @@
 				<div>
 					<p class="eyebrow mb-1">Gestión</p>
 					<h1 class="h3 mb-1">Empleados</h1>
+						<div th:if="${error}" class="alert alert-danger mt-2" th:text="${error}"></div>
 					<p class="text-muted mb-0">Empleados registrados en el sistema.</p>
 				</div>
 			</div>
 			<div class="heading-actions">
-				<a class="btn btn-primary btn-sm" th:href="@{/empleado/nuevo}">
+				<a class="btn btn-primary btn-sm" th:href="@{/empleado/nuevo}"
+					th:if="${session.rol == 'ADMIN'}">
 					<i class="bi bi-person-plus"></i> Nuevo Empleado
 				</a>
 			</div>
@@ -42,6 +44,7 @@
 							<th>Correo</th>
 							<th>ID Rol</th>
 							<th>Estado</th>
+							<th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -55,6 +58,10 @@
 								class="badge text-bg-success">Activo</span> <span
 								th:unless="${indice.estadoEmpleado}"
 								class="badge text-bg-secondary">Inactivo</span></td>
+							<td>
+								<a th:href="@{/empleado/editar/{id}(id=${indice.idEmpleado})}" class="btn btn-light btn-sm"><i class="bi bi-pencil"></i></a>
+								<a th:if="${session.rol == 'ADMIN'}" th:href="@{/empleado/desactivar/{id}(id=${indice.idEmpleado})}" class="btn btn-light btn-sm" onclick="return confirm('¿Desactivar este empleado?')"><i class="bi bi-slash-circle"></i></a>
+							</td>
 						</tr>
 					</tbody>
 				</table>

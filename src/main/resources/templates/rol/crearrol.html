@@ -25,6 +25,7 @@
 			<div class="col-12 col-xl-8">
 				<form class="panel" th:action="@{/rol/guardar}" th:object="${rol}"
 					method="post">
+					<input type="hidden" th:field="*{idRol}">
 					<div class="panel-header">
 						<div>
 							<h2 class="h5 mb-1 section-title">

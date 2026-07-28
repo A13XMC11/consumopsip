@@ -27,4 +27,15 @@ public class RolServiceImpl implements IRolService {
 		webClient.post().uri("/rol").header("Authorization", "Bearer " + token).bodyValue(nuevoRol).retrieve()
 				.toBodilessEntity().block();
 	}
+
+	@Override
+	public RolResponseDto buscarPorId(int idRol, String token) {
+		return listarRoles(token).stream().filter(rol -> rol.getIdRol() == idRol).findFirst().orElse(null);
+	}
+
+	@Override
+	public void eliminarRol(int idRol, String token) {
+		webClient.delete().uri("/rol/{idRol}", idRol).header("Authorization", "Bearer " + token).retrieve()
+				.toBodilessEntity().block();
+	}
 }

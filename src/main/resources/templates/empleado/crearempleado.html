@@ -27,6 +27,7 @@
 			<div class="col-12 col-xl-8">
 				<form class="panel" th:action="@{/empleado/guardar}"
 					th:object="${empleado}" method="post">
+					<input type="hidden" th:field="*{idEmpleado}">
 					<div class="panel-header">
 						<div>
 							<h2 class="h5 mb-1 section-title">
@@ -51,7 +52,8 @@
 							<label class="form-label">Contraseña</label> <input
 								class="form-control" type="password"
 								th:field="*{contrasenaEmpleado}">
-						</div>
+						<small class="text-muted">Deja este campo en blanco para no cambiar la contraseña actual.</small>
+					</div>
 						<div class="col-md-6">
 							<label class="form-label">Rol</label> <select class="form-select"
 								th:field="*{idRol}">

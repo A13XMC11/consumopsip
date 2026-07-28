@@ -11,6 +11,7 @@
         <div>
           <p class="eyebrow mb-1">Gestión</p>
           <h1 class="h3 mb-1">Ubicaciones</h1>
+          <div th:if="${error}" class="alert alert-danger mt-2" th:text="${error}"></div>
           <p class="text-muted mb-0">Puntos de marcación registrados.</p>
         </div>
       </div>
@@ -32,7 +33,7 @@
           <thead>
             <tr>
               <th>#</th><th>Nombre</th><th>Latitud</th>
-              <th>Longitud</th><th>Radio (m)</th><th>Estado</th>
+              <th>Longitud</th><th>Radio (m)</th><th>Estado</th><th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +47,10 @@
                 <span th:if="${indice.estadoUbicacion}" class="badge text-bg-success">Activa</span>
                 <span th:unless="${indice.estadoUbicacion}" class="badge text-bg-secondary">Inactiva</span>
               </td>
+            <td>
+              <a th:href="@{/ubicacion/editar/{id}(id=${indice.idUbicacion})}" class="btn btn-light btn-sm"><i class="bi bi-pencil"></i></a>
+              <a th:href="@{/ubicacion/desactivar/{id}(id=${indice.idUbicacion})}" class="btn btn-light btn-sm" onclick="return confirm('¿Desactivar esta ubicación?')"><i class="bi bi-slash-circle"></i></a>
+            </td>
             </tr>
           </tbody>
         </table>

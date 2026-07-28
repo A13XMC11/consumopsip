@@ -9,4 +9,8 @@ public interface IUbicacionService {
 	List<UbicacionResponseDto> listarUbicaciones(String token);
 
 	void guardarUbicacion(UbicacionRequestDto nuevaUbicacion, String token);
+
+	UbicacionResponseDto buscarPorId(int idUbicacion, String token);
+
+	void desactivarUbicacion(int idUbicacion, String token);
 }

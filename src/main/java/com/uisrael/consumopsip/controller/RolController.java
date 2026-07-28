@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.uisrael.consumopsip.model.dto.request.RolRequestDto;
 import com.uisrael.consumopsip.model.dto.response.RolResponseDto;
 import com.uisrael.consumopsip.service.IRolService;
@@ -63,6 +65,46 @@ public class RolController {
 		}
 
 		servicioRol.guardarRol(rol, token);
+		return "redirect:/rol";
+	}
+
+	@GetMapping("/editar/{idRol}")
+	public String editarRol(@PathVariable int idRol, HttpSession session, Model model) {
+		if (session.getAttribute("token") == null) {
+			return "redirect:/login";
+		}
+		if (!"ADMIN".equals(session.getAttribute("rol"))) {
+			return "redirect:/miasistencia";
+		}
+		String token = (String) session.getAttribute("token");
+		RolResponseDto rol = servicioRol.buscarPorId(idRol, token);
+		if (rol == null) {
+			return "redirect:/rol";
+		}
+		RolRequestDto dto = new RolRequestDto();
+		dto.setIdRol(rol.getIdRol());
+		dto.setNombreRol(rol.getNombreRol());
+		dto.setDescripcionRol(rol.getDescripcionRol());
+		dto.setCreadoRol(rol.getCreadoRol());
+		model.addAttribute("rol", dto);
+		return "rol/crearrol";
+	}
+
+	@GetMapping("/eliminar/{idRol}")
+	public String eliminarRol(@PathVariable int idRol, HttpSession session, RedirectAttributes redirectAttributes) {
+		String token = (String) session.getAttribute("token");
+		if (token == null) {
+			return "redirect:/login";
+		}
+		if (!"ADMIN".equals(session.getAttribute("rol"))) {
+			return "redirect:/miasistencia";
+		}
+		try {
+			servicioRol.eliminarRol(idRol, token);
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("error",
+					"No se pudo eliminar el rol: probablemente está asignado a uno o más empleados.");
+		}
 		return "redirect:/rol";
 	}
 }

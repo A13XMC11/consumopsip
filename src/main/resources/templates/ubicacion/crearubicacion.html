@@ -23,6 +23,7 @@
     <section class="row g-3">
       <div class="col-12 col-xl-8">
         <form class="panel" th:action="@{/ubicacion/guardar}" th:object="${ubicacion}" method="post">
+          <input type="hidden" th:field="*{idUbicacion}">
           <div class="panel-header">
             <div><h2 class="h5 mb-1 section-title"><i class="bi bi-geo-alt-fill"></i><span>Datos de la Ubicación</span></h2></div>
           </div>

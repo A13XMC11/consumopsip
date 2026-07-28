@@ -13,6 +13,7 @@
 				<div>
 					<p class="eyebrow mb-1">Gestión</p>
 					<h1 class="h3 mb-1">Horarios</h1>
+					<div th:if="${error}" class="alert alert-danger mt-2" th:text="${error}"></div>
 					<p class="text-muted mb-0">Horarios laborales configurados en el sistema.</p>
 				</div>
 			</div>
@@ -40,6 +41,7 @@
 							<th>Hora Salida</th>
 							<th>Tolerancia (min)</th>
 							<th>Estado</th>
+							<th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -53,6 +55,10 @@
 								class="badge text-bg-success">Activo</span> <span
 								th:unless="${indice.estadoHorario}"
 								class="badge text-bg-secondary">Inactivo</span></td>
+							<td>
+								<a th:href="@{/horarios/editar/{id}(id=${indice.idHorario})}" class="btn btn-light btn-sm"><i class="bi bi-pencil"></i></a>
+								<a th:href="@{/horarios/desactivar/{id}(id=${indice.idHorario})}" class="btn btn-light btn-sm" onclick="return confirm('¿Desactivar este horario?')"><i class="bi bi-slash-circle"></i></a>
+							</td>
 						</tr>
 					</tbody>
 				</table>

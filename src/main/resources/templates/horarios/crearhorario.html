@@ -24,6 +24,7 @@
 		<section class="row g-3">
 			<div class="col-12 col-xl-8">
 				<form class="panel" th:action="@{/horarios/guardar}" th:object="${horario}" method="post">
+					<input type="hidden" th:field="*{idHorario}">
 					<div class="panel-header">
 						<div>
 							<h2 class="h5 mb-1 section-title">

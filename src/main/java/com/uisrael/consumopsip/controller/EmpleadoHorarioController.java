@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.uisrael.consumopsip.model.dto.request.EmpleadoHorarioRequestDto;
 import com.uisrael.consumopsip.model.dto.response.EmpleadoHorarioResponseDto;
 import com.uisrael.consumopsip.model.dto.response.EmpleadoResponseDto;
@@ -89,6 +91,52 @@ public class EmpleadoHorarioController {
             return "redirect:/miasistencia";
         }
         servicioEmpleadoHorario.guardarEmpleadoHorario(empleadoHorario, token);
+        return "redirect:/empleadohorario";
+    }
+
+    @GetMapping("/editar/{idAsignacion}")
+    public String editarEmpleadoHorario(@PathVariable int idAsignacion, HttpSession session, Model model) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
+        EmpleadoHorarioResponseDto asignacion = servicioEmpleadoHorario.buscarPorId(idAsignacion, token);
+        if (asignacion == null) {
+            return "redirect:/empleadohorario";
+        }
+        EmpleadoHorarioRequestDto dto = new EmpleadoHorarioRequestDto();
+        dto.setIdAsignacion(asignacion.getIdAsignacion());
+        dto.setIdEmpleado(asignacion.getIdEmpleado());
+        dto.setIdHorario(asignacion.getIdHorario());
+        dto.setFechaInicio(asignacion.getFechaInicio());
+        dto.setFechaFin(asignacion.getFechaFin());
+        dto.setEstadoEmpleadoHorario(asignacion.isEstadoEmpleadoHorario());
+
+        List<EmpleadoResponseDto> empleadosBD = servicioEmpleado.listarEmpleados(token);
+        List<HorariosResponseDto> horariosBD = servicioHorarios.listarHorarios(token);
+        model.addAttribute("listaempleados", empleadosBD);
+        model.addAttribute("listahorarios", horariosBD);
+        model.addAttribute("empleadohorario", dto);
+        return "empleadohorario/crearempleadohorario";
+    }
+
+    @GetMapping("/eliminar/{idAsignacion}")
+    public String eliminarEmpleadoHorario(@PathVariable int idAsignacion, HttpSession session, RedirectAttributes redirectAttributes) {
+        String token = (String) session.getAttribute("token");
+        if (token == null) {
+            return "redirect:/login";
+        }
+        if (!"ADMIN".equals(session.getAttribute("rol"))) {
+            return "redirect:/miasistencia";
+        }
+        try {
+            servicioEmpleadoHorario.eliminarEmpleadoHorario(idAsignacion, token);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "No se pudo eliminar la asignación.");
+        }
         return "redirect:/empleadohorario";
     }
 }

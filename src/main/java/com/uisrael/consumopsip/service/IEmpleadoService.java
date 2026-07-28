@@ -8,7 +8,11 @@ import com.uisrael.consumopsip.model.dto.response.EmpleadoResponseDto;
 public interface IEmpleadoService {
 	
 	List<EmpleadoResponseDto> listarEmpleados(String token);
-	
+
 	void guardarEmpleado(EmpleadoRequestDto nuevoEmpleado, String token);
 	
+	EmpleadoResponseDto buscarPorId(int idEmpleado, String token);
+
+	void desactivarEmpleado(int idEmpleado, String token);
+
 }

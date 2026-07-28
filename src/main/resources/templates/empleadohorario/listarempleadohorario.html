@@ -13,6 +13,7 @@
 				<div>
 					<p class="eyebrow mb-1">Gestión</p>
 					<h1 class="h3 mb-1">Asignación de Horarios</h1>
+					<div th:if="${error}" class="alert alert-danger mt-2" th:text="${error}"></div>
 					<p class="text-muted mb-0">Turnos asignados por empleado.</p>
 				</div>
 			</div>
@@ -42,6 +43,7 @@
 							<th>Fecha Inicio</th>
 							<th>Fecha Fin</th>
 							<th>Estado</th>
+						<th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -55,6 +57,10 @@
 								class="badge text-bg-success">Activo</span> <span
 								th:unless="${indice.estadoEmpleadoHorario}"
 								class="badge text-bg-secondary">Inactivo</span></td>
+						<td>
+							<a th:href="@{/empleadohorario/editar/{id}(id=${indice.idAsignacion})}" class="btn btn-light btn-sm"><i class="bi bi-pencil"></i></a>
+							<a th:href="@{/empleadohorario/eliminar/{id}(id=${indice.idAsignacion})}" class="btn btn-light btn-sm" onclick="return confirm('¿Eliminar esta asignación?')"><i class="bi bi-trash"></i></a>
+						</td>
 						</tr>
 					</tbody>
 				</table>

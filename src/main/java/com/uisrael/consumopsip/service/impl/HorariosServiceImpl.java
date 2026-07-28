@@ -29,4 +29,22 @@ public class HorariosServiceImpl implements IHorariosService {
 				.header("Authorization", "Bearer " + token)
 				.bodyValue(nuevoHorario).retrieve().toBodilessEntity().block();
 	}
+
+	@Override
+	public HorariosResponseDto buscarPorId(int idHorario, String token) {
+		return listarHorarios(token).stream().filter(h -> h.getIdHorario() == idHorario).findFirst().orElse(null);
+	}
+
+	@Override
+	public void desactivarHorario(int idHorario, String token) {
+		HorariosResponseDto actual = buscarPorId(idHorario, token);
+		HorariosRequestDto dto = new HorariosRequestDto();
+		dto.setIdHorario(actual.getIdHorario());
+		dto.setNombre(actual.getNombre());
+		dto.setHoraEntrada(actual.getHoraEntrada());
+		dto.setHoraSalida(actual.getHoraSalida());
+		dto.setToleranciaMinutos(actual.getToleranciaMinutos());
+		dto.setEstadoHorario(false);
+		guardarHorario(dto, token);
+	}
 }

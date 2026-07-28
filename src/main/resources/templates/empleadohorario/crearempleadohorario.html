@@ -26,6 +26,7 @@
 			<div class="col-12 col-xl-8">
 				<form class="panel" th:action="@{/empleadohorario/guardar}"
 					th:object="${empleadohorario}" method="post">
+					<input type="hidden" th:field="*{idAsignacion}">
 					<div class="panel-header">
 						<div>
 							<h2 class="h5 mb-1 section-title">

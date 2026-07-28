@@ -10,4 +10,8 @@ public interface IRolService {
 	List<RolResponseDto> listarRoles(String token);
 
 	void guardarRol(RolRequestDto nuevoRol, String token);
+
+	RolResponseDto buscarPorId(int idRol, String token);
+
+	void eliminarRol(int idRol, String token);
 }
