@@ -1,0 +1,67 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cambiar contraseña | Asistencia Óptica América</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+</head>
+<body class="auth-body">
+	<div class="auth-page">
+		<div class="auth-card">
+			<a class="auth-brand" href="/"> <span class="brand-icon"><i
+					class="bi bi-grid-1x2-fill"></i></span> <span>
+					<strong>Asistencia</strong> <small>Óptica América</small>
+			</span>
+			</a>
+
+			<p class="text-muted mb-4">Es tu primer ingreso. Debes cambiar tu
+				contraseña antes de continuar.</p>
+
+			<div th:if="${error}" class="alert alert-danger d-flex align-items-center gap-2"
+				role="alert">
+				<i class="bi bi-exclamation-triangle-fill"></i> <span
+					th:text="${error}"></span>
+			</div>
+
+			<form th:action="@{/cambiar-contrasena}" method="post">
+				<div class="mb-3">
+					<label class="form-label" for="contrasenaActual">Contraseña
+						actual</label>
+					<div class="input-group">
+						<span class="input-group-text"><i class="bi bi-lock"></i></span>
+						<input type="password" id="contrasenaActual" class="form-control"
+							name="contrasenaActual" required>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="contrasenaNueva">Nueva
+						contraseña</label>
+					<div class="input-group">
+						<span class="input-group-text"><i class="bi bi-key"></i></span>
+						<input type="password" id="contrasenaNueva" class="form-control"
+							name="contrasenaNueva" required>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="confirmarContrasena">Confirmar
+						nueva contraseña</label>
+					<div class="input-group">
+						<span class="input-group-text"><i class="bi bi-key"></i></span>
+						<input type="password" id="confirmarContrasena" class="form-control"
+							name="confirmarContrasena" required>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary w-100">
+					<i class="bi bi-check2-circle"></i> Cambiar contraseña
+				</button>
+			</form>
+
+			<p class="auth-footer">Óptica América — Control de Asistencia</p>
+		</div>
+	</div>
+</body>
+</html>

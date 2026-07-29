@@ -69,7 +69,7 @@ public class EmpleadoController {
 	}
 
 	@PostMapping("/guardar")
-	public String guardarEmpleado(@ModelAttribute EmpleadoRequestDto empleado, HttpSession session) {
+	public String guardarEmpleado(@ModelAttribute EmpleadoRequestDto empleado, HttpSession session, Model model) {
 		String token = (String) session.getAttribute("token");
 		if (token == null) {
 			return "redirect:/login";
@@ -80,7 +80,16 @@ public class EmpleadoController {
 		if (empleado.getIdEmpleado() == 0 && noEsAdmin(session)) {
 			return "redirect:/empleado";
 		}
-		servicioEmpleado.guardarEmpleado(empleado, token);
+
+		try {
+			servicioEmpleado.guardarEmpleado(empleado, token);
+		} catch (Exception e) {
+			List<RolResponseDto> rolesBD = servicioRol.listarRoles(token);
+			model.addAttribute("listaroles", rolesBD);
+			model.addAttribute("empleado", empleado);
+			model.addAttribute("error", "No se pudo guardar el empleado: revisa el número de documento ingresado.");
+			return "empleado/crearempleado";
+		}
 		return "redirect:/empleado";
 	}
 
@@ -103,6 +112,8 @@ public class EmpleadoController {
 		dto.setNombreEmpleado(empleado.getNombreEmpleado());
 		dto.setApellidosEmpleado(empleado.getApellidosEmpleado());
 		dto.setCorreoEmpleado(empleado.getCorreoEmpleado());
+		dto.setTipoDocumento(empleado.getTipoDocumento());
+		dto.setNumeroDocumento(empleado.getNumeroDocumento());
 		dto.setEstadoEmpleado(empleado.isEstadoEmpleado());
 
 		List<RolResponseDto> rolesBD = servicioRol.listarRoles(token);

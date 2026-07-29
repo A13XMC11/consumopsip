@@ -31,6 +31,12 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 			EmpleadoResponseDto actual = buscarPorId(nuevoEmpleado.getIdEmpleado(), token);
 			nuevoEmpleado.setContrasenaEmpleado(actual.getContrasenaEmpleado());
 		}
+		if (nuevoEmpleado.getIdEmpleado() != 0
+				&& (nuevoEmpleado.getNumeroDocumento() == null || nuevoEmpleado.getNumeroDocumento().isBlank())) {
+			EmpleadoResponseDto actual = buscarPorId(nuevoEmpleado.getIdEmpleado(), token);
+			nuevoEmpleado.setTipoDocumento(actual.getTipoDocumento());
+			nuevoEmpleado.setNumeroDocumento(actual.getNumeroDocumento());
+		}
 		webClient.post().uri("/empleado").header("Authorization", "Bearer " + token).bodyValue(nuevoEmpleado).retrieve()
 				.toBodilessEntity().block();
 	}
@@ -50,6 +56,8 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 		dto.setNombreEmpleado(actual.getNombreEmpleado());
 		dto.setApellidosEmpleado(actual.getApellidosEmpleado());
 		dto.setCorreoEmpleado(actual.getCorreoEmpleado());
+		dto.setTipoDocumento(actual.getTipoDocumento());
+		dto.setNumeroDocumento(actual.getNumeroDocumento());
 		dto.setEstadoEmpleado(false);
 		guardarEmpleado(dto, token);
 	}

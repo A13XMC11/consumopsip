@@ -6,6 +6,7 @@ public class LoginResponseDto {
 	private int idEmpleado;
 	private String nombre;
 	private String rol;
+	private boolean debeCambiarContrasena;
 
 	public String getToken() {
 		return token;
@@ -37,5 +38,13 @@ public class LoginResponseDto {
 
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+	public boolean isDebeCambiarContrasena() {
+		return debeCambiarContrasena;
+	}
+
+	public void setDebeCambiarContrasena(boolean debeCambiarContrasena) {
+		this.debeCambiarContrasena = debeCambiarContrasena;
 	}
 }

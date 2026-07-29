@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificar correo | Asistencia Óptica América</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+</head>
+<body class="auth-body">
+	<div class="auth-page">
+		<div class="auth-card">
+			<a class="auth-brand" href="/"> <span class="brand-icon"><i
+					class="bi bi-grid-1x2-fill"></i></span> <span>
+					<strong>Asistencia</strong> <small>Óptica América</small>
+			</span>
+			</a>
+
+			<div th:if="${mensaje}" class="alert alert-success d-flex align-items-center gap-2"
+				role="alert">
+				<i class="bi bi-check-circle-fill"></i> <span th:text="${mensaje}"></span>
+			</div>
+			<div th:if="${error}" class="alert alert-danger d-flex align-items-center gap-2"
+				role="alert">
+				<i class="bi bi-exclamation-triangle-fill"></i> <span
+					th:text="${error}"></span>
+			</div>
+
+			<a th:href="@{/login}" class="btn btn-primary w-100">
+				<i class="bi bi-box-arrow-in-right"></i> Ir a iniciar sesión
+			</a>
+
+			<p class="auth-footer">Óptica América — Control de Asistencia</p>
+		</div>
+	</div>
+</body>
+</html>

@@ -39,10 +39,10 @@
 								EMPLEADO)</label> <input class="form-control" type="text"
 								th:field="*{nombreRol}">
 						</div>
-						<div class="col-md-6">
-							<label class="form-label">Fecha de creación</label> <input
-								class="form-control" type="datetime-local"
-								th:field="*{creadoRol}">
+						<div class="col-md-6" th:if="${creadoRol != null}">
+							<label class="form-label">Fecha de creación</label>
+							<input class="form-control" type="text" disabled
+								th:value="${#temporals.format(creadoRol, 'dd/MM/yyyy HH:mm')}">
 						</div>
 						<div class="col-12">
 							<label class="form-label">Descripción</label> <input

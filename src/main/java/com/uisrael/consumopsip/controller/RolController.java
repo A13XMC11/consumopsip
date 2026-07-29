@@ -85,8 +85,8 @@ public class RolController {
 		dto.setIdRol(rol.getIdRol());
 		dto.setNombreRol(rol.getNombreRol());
 		dto.setDescripcionRol(rol.getDescripcionRol());
-		dto.setCreadoRol(rol.getCreadoRol());
 		model.addAttribute("rol", dto);
+		model.addAttribute("creadoRol", rol.getCreadoRol());
 		return "rol/crearrol";
 	}
 

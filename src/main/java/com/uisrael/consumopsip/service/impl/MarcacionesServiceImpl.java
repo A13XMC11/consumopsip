@@ -3,7 +3,6 @@ package com.uisrael.consumopsip.service.impl;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import com.uisrael.consumopsip.model.dto.request.MarcacionesRequestDto;
 import com.uisrael.consumopsip.model.dto.response.MarcacionesResponseDto;
 import com.uisrael.consumopsip.service.IMarcacionesService;
 
@@ -20,12 +19,6 @@ public class MarcacionesServiceImpl implements IMarcacionesService {
 	public List<MarcacionesResponseDto> listarMarcaciones(String token) {
 		return webClient.get().uri("/marcaciones").header("Authorization", "Bearer " + token).retrieve()
 				.bodyToFlux(MarcacionesResponseDto.class).collectList().block();
-	}
-
-	@Override
-	public void guardarMarcacion(MarcacionesRequestDto nuevaMarcacion, String token) {
-		webClient.post().uri("/marcaciones").header("Authorization", "Bearer " + token).bodyValue(nuevaMarcacion)
-				.retrieve().toBodilessEntity().block();
 	}
 
 	@Override

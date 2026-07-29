@@ -22,6 +22,8 @@
 
 		<div th:if="${mensaje}" class="alert alert-success mt-3"
 			th:text="${mensaje}"></div>
+		<div th:if="${error}" class="alert alert-danger mt-3"
+			th:text="${error}"></div>
 
 		<section class="panel mt-3">
 			<div class="panel-header">
@@ -67,6 +69,43 @@
 						</button>
 					</form>
 				</div>
+			</div>
+		</section>
+
+		<section class="panel mt-3">
+			<div class="panel-header">
+				<div>
+					<h2 class="h5 mb-1 section-title">
+						<i class="bi bi-table"></i><span>Mis Marcaciones de Hoy</span>
+					</h2>
+					<p class="text-muted mb-0">Registros de entrada y salida del día
+						de hoy.</p>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table align-middle mb-0">
+					<thead>
+						<tr>
+							<th>Tipo</th>
+							<th>Hora</th>
+							<th>Válida</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="indice : ${marcacionesHoy}">
+							<td th:text="${indice.tipo}"></td>
+							<td th:text="${indice.horaMarcacion}"></td>
+							<td><span th:if="${indice.valida}"
+								class="badge text-bg-success">Sí</span> <span
+								th:unless="${indice.valida}" class="badge text-bg-danger">No</span>
+							</td>
+						</tr>
+						<tr th:if="${#lists.isEmpty(marcacionesHoy)}">
+							<td colspan="3" class="text-center text-muted">Aún no
+								tienes marcaciones registradas hoy.</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</section>
 	</div>

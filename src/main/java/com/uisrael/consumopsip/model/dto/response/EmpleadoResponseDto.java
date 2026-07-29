@@ -10,5 +10,7 @@ public class EmpleadoResponseDto {
 	private String apellidosEmpleado;
 	private String correoEmpleado;
 	private String contrasenaEmpleado;
+	private String tipoDocumento;
+	private String numeroDocumento;
 	private boolean estadoEmpleado;
 }

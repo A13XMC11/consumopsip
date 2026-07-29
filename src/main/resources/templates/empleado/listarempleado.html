@@ -42,6 +42,7 @@
 							<th>Nombre</th>
 							<th>Apellidos</th>
 							<th>Correo</th>
+							<th>Documento</th>
 							<th>ID Rol</th>
 							<th>Estado</th>
 							<th>Acciones</th>
@@ -53,6 +54,8 @@
 							<td th:text="${indice.nombreEmpleado}"></td>
 							<td th:text="${indice.apellidosEmpleado}"></td>
 							<td th:text="${indice.correoEmpleado}"></td>
+							<td><span th:text="${indice.tipoDocumento == 'CEDULA' ? 'C.I.' : 'Pasaporte'}"></span>
+								<span th:text="${indice.numeroDocumento}"></span></td>
 							<td th:text="${indice.idRol}"></td>
 							<td><span th:if="${indice.estadoEmpleado}"
 								class="badge text-bg-success">Activo</span> <span

@@ -2,34 +2,78 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Iniciar sesión | Asistencia Óptica América</title>
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
 <link rel="stylesheet" th:href="@{/assets/css/style.css}">
 </head>
-<body>
-	<div class="container d-flex align-items-center justify-content-center"
-		style="min-height: 100vh;">
-		<div class="card shadow-sm" style="max-width: 400px; width: 100%;">
-			<div class="card-body p-4">
-				<h1 class="h4 mb-3 text-center">Asistencia Óptica América</h1>
-				<p class="text-muted text-center mb-4">Ingresa con tu correo y
-					contraseña</p>
+<body class="auth-body">
+	<div class="auth-page">
+		<div class="auth-card">
+			<a class="auth-brand" href="/"> <span class="brand-icon"><i
+					class="bi bi-grid-1x2-fill"></i></span> <span>
+					<strong>Asistencia</strong> <small>Óptica América</small>
+			</span>
+			</a>
 
-				<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+			<p class="text-muted mb-4">Ingresa con tu correo y contraseña para
+				continuar.</p>
 
-				<form th:action="@{/login}" method="post">
-					<div class="mb-3">
-						<label class="form-label">Correo</label> <input type="email"
-							class="form-control" name="correo" required>
-					</div>
-					<div class="mb-3">
-						<label class="form-label">Contraseña</label> <input
-							type="password" class="form-control" name="contrasena" required>
-					</div>
-					<button type="submit" class="btn btn-primary w-100">Ingresar</button>
-				</form>
+			<div th:if="${error}" class="alert alert-danger d-flex align-items-center gap-2"
+				role="alert">
+				<i class="bi bi-exclamation-triangle-fill"></i> <span
+					th:text="${error}"></span>
 			</div>
+			<div th:if="${mensaje}" class="alert alert-success d-flex align-items-center gap-2"
+				role="alert">
+				<i class="bi bi-check-circle-fill"></i> <span th:text="${mensaje}"></span>
+			</div>
+
+			<form th:action="@{/login}" method="post">
+				<div class="mb-3">
+					<label class="form-label" for="correo">Correo</label>
+					<div class="input-group">
+						<span class="input-group-text"><i class="bi bi-envelope"></i></span>
+						<input type="email" id="correo" class="form-control" name="correo"
+							placeholder="nombre@opticaamerica.com" autofocus required>
+					</div>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="contrasena">Contraseña</label>
+					<div class="input-group">
+						<span class="input-group-text"><i class="bi bi-lock"></i></span>
+						<input type="password" id="contrasena" class="form-control"
+							name="contrasena" placeholder="••••••••" required>
+						<button class="btn btn-outline-secondary" type="button"
+							id="togglePassword" aria-label="Mostrar contraseña">
+							<i class="bi bi-eye" id="togglePasswordIcon"></i>
+						</button>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary w-100">
+					<i class="bi bi-box-arrow-in-right"></i> Ingresar
+				</button>
+			</form>
+
+			<p class="text-center mt-3">
+				<a th:href="@{/olvide-contrasena}">¿Olvidaste tu contraseña?</a>
+			</p>
+
+			<p class="auth-footer">Óptica América — Control de Asistencia</p>
 		</div>
 	</div>
+
+	<script>
+		document.getElementById('togglePassword').addEventListener('click', function () {
+			var input = document.getElementById('contrasena');
+			var icon = document.getElementById('togglePasswordIcon');
+			var isHidden = input.type === 'password';
+			input.type = isHidden ? 'text' : 'password';
+			icon.classList.toggle('bi-eye', !isHidden);
+			icon.classList.toggle('bi-eye-slash', isHidden);
+		});
+	</script>
 </body>
 </html>

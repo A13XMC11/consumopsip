@@ -1,0 +1,56 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recuperar contraseña | Asistencia Óptica América</title>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/assets/css/style.css}">
+</head>
+<body class="auth-body">
+	<div class="auth-page">
+		<div class="auth-card">
+			<a class="auth-brand" href="/"> <span class="brand-icon"><i
+					class="bi bi-grid-1x2-fill"></i></span> <span>
+					<strong>Asistencia</strong> <small>Óptica América</small>
+			</span>
+			</a>
+
+			<p class="text-muted mb-4">Ingresa tu correo y te enviaremos un
+				link para restablecer tu contraseña.</p>
+
+			<div th:if="${mensaje}" class="alert alert-success d-flex align-items-center gap-2"
+				role="alert">
+				<i class="bi bi-check-circle-fill"></i> <span th:text="${mensaje}"></span>
+			</div>
+			<div th:if="${error}" class="alert alert-danger d-flex align-items-center gap-2"
+				role="alert">
+				<i class="bi bi-exclamation-triangle-fill"></i> <span
+					th:text="${error}"></span>
+			</div>
+
+			<form th:if="${mensaje == null}" th:action="@{/olvide-contrasena}" method="post">
+				<div class="mb-3">
+					<label class="form-label" for="correo">Correo</label>
+					<div class="input-group">
+						<span class="input-group-text"><i class="bi bi-envelope"></i></span>
+						<input type="email" id="correo" class="form-control" name="correo"
+							placeholder="nombre@opticaamerica.com" autofocus required>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary w-100">
+					<i class="bi bi-send"></i> Enviar link de recuperación
+				</button>
+			</form>
+
+			<p class="text-center mt-3">
+				<a th:href="@{/login}">Volver a iniciar sesión</a>
+			</p>
+
+			<p class="auth-footer">Óptica América — Control de Asistencia</p>
+		</div>
+	</div>
+</body>
+</html>

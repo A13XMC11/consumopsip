@@ -44,7 +44,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="fechaReporte" class="form-label">Fecha</label>
-                                <input type="date" th:field="*{fechaReporte}" class="form-control" id="fechaReporte">
+                                <input type="date" th:field="*{fechaReporte}" th:max="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" class="form-control" id="fechaReporte">
                             </div>
                             <div class="mb-3">
                                 <label for="horaEntrada" class="form-label">Hora de Entrada</label>
