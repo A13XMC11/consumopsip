@@ -24,6 +24,7 @@
 		</div>
 		<section class="row g-3">
 			<div class="col-12 col-xl-8">
+				<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 				<form class="panel" th:action="@{/empleadohorario/guardar}"
 					th:object="${empleadohorario}" method="post">
 					<input type="hidden" th:field="*{idAsignacion}">

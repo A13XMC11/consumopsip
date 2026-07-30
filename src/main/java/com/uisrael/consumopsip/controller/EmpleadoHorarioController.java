@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.uisrael.consumopsip.model.dto.request.EmpleadoHorarioRequestDto;
 import com.uisrael.consumopsip.model.dto.response.EmpleadoHorarioResponseDto;
@@ -82,7 +83,7 @@ public class EmpleadoHorarioController {
     }
 
     @PostMapping("/guardar")
-    public String guardarEmpleadoHorario(@ModelAttribute EmpleadoHorarioRequestDto empleadoHorario, HttpSession session) {
+    public String guardarEmpleadoHorario(@ModelAttribute EmpleadoHorarioRequestDto empleadoHorario, HttpSession session, Model model) {
         String token = (String) session.getAttribute("token");
         if (token == null) {
             return "redirect:/login";
@@ -90,7 +91,15 @@ public class EmpleadoHorarioController {
         if (!"ADMIN".equals(session.getAttribute("rol"))) {
             return "redirect:/miasistencia";
         }
-        servicioEmpleadoHorario.guardarEmpleadoHorario(empleadoHorario, token);
+        try {
+            servicioEmpleadoHorario.guardarEmpleadoHorario(empleadoHorario, token);
+        } catch (WebClientResponseException e) {
+            model.addAttribute("error", "No se pudo guardar la asignación: la fecha de fin no puede ser anterior a la fecha de inicio.");
+            model.addAttribute("listaempleados", servicioEmpleado.listarEmpleados(token));
+            model.addAttribute("listahorarios", servicioHorarios.listarHorarios(token));
+            model.addAttribute("empleadohorario", empleadoHorario);
+            return "empleadohorario/crearempleadohorario";
+        }
         return "redirect:/empleadohorario";
     }
 

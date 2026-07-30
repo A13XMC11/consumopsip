@@ -32,13 +32,16 @@
               <label class="form-label">Nombre</label>
               <input class="form-control" type="text" th:field="*{nombreUbicacion}">
             </div>
+            <div class="col-12">
+              <span id="ubicacionActualEstado" class="text-muted small"></span>
+            </div>
             <div class="col-md-6">
               <label class="form-label">Latitud</label>
-              <input class="form-control" type="number" step="any" th:field="*{latitudUbicacion}">
+              <input class="form-control" type="number" step="any" id="latitudUbicacion" th:field="*{latitudUbicacion}">
             </div>
             <div class="col-md-6">
               <label class="form-label">Longitud</label>
-              <input class="form-control" type="number" step="any" th:field="*{longitudUbicacion}">
+              <input class="form-control" type="number" step="any" id="longitudUbicacion" th:field="*{longitudUbicacion}">
             </div>
             <div class="col-md-6">
               <label class="form-label">Radio (metros)</label>
@@ -58,6 +61,45 @@
         </form>
       </div>
     </section>
+    <script>
+      (function () {
+        var estado = document.getElementById('ubicacionActualEstado');
+        var latInput = document.getElementById('latitudUbicacion');
+        var lngInput = document.getElementById('longitudUbicacion');
+
+        function tieneValor(valor) {
+          var numero = parseFloat(valor);
+          return valor !== '' && !isNaN(numero) && numero !== 0;
+        }
+
+        if (tieneValor(latInput.value) || tieneValor(lngInput.value)) {
+          return;
+        }
+
+        if (!navigator.geolocation) {
+          estado.textContent = 'Tu navegador no soporta geolocalización.';
+          return;
+        }
+
+        estado.textContent = 'Obteniendo tu ubicación...';
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            latInput.value = position.coords.latitude.toFixed(6);
+            lngInput.value = position.coords.longitude.toFixed(6);
+            estado.textContent = 'Ubicación capturada automáticamente (precisión ±' + Math.round(position.coords.accuracy) + ' m).';
+          },
+          function (error) {
+            var mensajes = {
+              1: 'Permiso de ubicación denegado. Ingresa las coordenadas manualmente.',
+              2: 'No se pudo determinar tu ubicación. Ingresa las coordenadas manualmente.',
+              3: 'Tiempo de espera agotado al obtener la ubicación. Ingresa las coordenadas manualmente.'
+            };
+            estado.textContent = mensajes[error.code] || 'Error al obtener la ubicación.';
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+      })();
+    </script>
   </div>
 </body>
 </html>
