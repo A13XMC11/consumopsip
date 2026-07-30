@@ -36,6 +36,7 @@
 							<th>Fecha</th>
 							<th>Hora</th>
 							<th>Válida</th>
+							<th>Descripción</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,6 +50,7 @@
 								class="badge text-bg-success">Sí</span> <span
 								th:unless="${indice.valida}" class="badge text-bg-danger">No</span>
 							</td>
+							<td th:text="${indice.observacion}"></td>
 						</tr>
 					</tbody>
 				</table>
