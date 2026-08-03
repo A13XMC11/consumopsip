@@ -1,5 +1,7 @@
 package com.uisrael.consumopsip.controller;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.uisrael.consumopsip.model.dto.request.RolRequestDto;
 import com.uisrael.consumopsip.model.dto.response.RolResponseDto;
+import com.uisrael.consumopsip.model.enums.RolNombre;
 import com.uisrael.consumopsip.service.IRolService;
 
 import jakarta.servlet.http.HttpSession;
@@ -50,6 +53,7 @@ public class RolController {
 		}
 
 		model.addAttribute("rol", new RolRequestDto());
+		model.addAttribute("rolesDisponibles", nombresRolDisponibles(null));
 		return "rol/crearrol";
 	}
 
@@ -87,7 +91,17 @@ public class RolController {
 		dto.setDescripcionRol(rol.getDescripcionRol());
 		model.addAttribute("rol", dto);
 		model.addAttribute("creadoRol", rol.getCreadoRol());
+		model.addAttribute("rolesDisponibles", nombresRolDisponibles(rol.getNombreRol()));
 		return "rol/crearrol";
+	}
+
+	private List<String> nombresRolDisponibles(String nombreRolActual) {
+		LinkedHashSet<String> nombres = new LinkedHashSet<>();
+		Arrays.stream(RolNombre.values()).map(Enum::name).forEach(nombres::add);
+		if (nombreRolActual != null && !nombreRolActual.isBlank()) {
+			nombres.add(nombreRolActual);
+		}
+		return List.copyOf(nombres);
 	}
 
 	@GetMapping("/eliminar/{idRol}")

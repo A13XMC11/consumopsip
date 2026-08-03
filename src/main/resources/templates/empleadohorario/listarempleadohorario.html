@@ -51,8 +51,8 @@
 							<td th:text="${indice.idAsignacion}"></td>
 							<td th:text="${mapaEmpleados[indice.idEmpleado]}"></td>
 							<td th:text="${mapaHorarios[indice.idHorario]}"></td>
-							<td th:text="${indice.fechaInicio}"></td>
-							<td th:text="${indice.fechaFin}"></td>
+							<td th:text="${indice.fechaInicio != null} ? ${#dates.format(indice.fechaInicio, 'dd/MM/yyyy')} : ''"></td>
+							<td th:text="${indice.fechaFin != null} ? ${#dates.format(indice.fechaFin, 'dd/MM/yyyy')} : ''"></td>
 							<td><span th:if="${indice.estadoEmpleadoHorario}"
 								class="badge text-bg-success">Activo</span> <span
 								th:unless="${indice.estadoEmpleadoHorario}"

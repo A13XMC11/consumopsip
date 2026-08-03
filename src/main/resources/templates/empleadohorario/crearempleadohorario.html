@@ -25,9 +25,10 @@
 		<section class="row g-3">
 			<div class="col-12 col-xl-8">
 				<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-				<form class="panel" th:action="@{/empleadohorario/guardar}"
+				<form class="panel" id="formEmpleadoHorario" th:action="@{/empleadohorario/guardar}"
 					th:object="${empleadohorario}" method="post">
 					<input type="hidden" th:field="*{idAsignacion}">
+					<input type="hidden" id="forzarReemplazo" th:field="*{forzarReemplazo}">
 					<div class="panel-header">
 						<div>
 							<h2 class="h5 mb-1 section-title">
@@ -75,8 +76,45 @@
 						</button>
 					</div>
 				</form>
+
+				<div th:if="${conflictoHorario}" class="modal fade" id="modalConflictoHorario"
+					tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									<i class="bi bi-exclamation-triangle text-warning"></i>
+									Horario ya asignado
+								</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+							</div>
+							<div class="modal-body">
+								<p th:text="${conflictoMensaje}"></p>
+								<p>¿Deseas reemplazar el horario actual del empleado por el nuevo?</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+								<button type="button" class="btn btn-warning" id="btnReemplazarHorario">
+									<i class="bi bi-arrow-repeat"></i> Reemplazar horario
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
+		<th:block th:if="${conflictoHorario}">
+			<script th:inline="javascript">
+				document.addEventListener('DOMContentLoaded', function () {
+					var modal = new bootstrap.Modal(document.getElementById('modalConflictoHorario'));
+					modal.show();
+					document.getElementById('btnReemplazarHorario').addEventListener('click', function () {
+						document.getElementById('forzarReemplazo').value = 'true';
+						document.getElementById('formEmpleadoHorario').submit();
+					});
+				});
+			</script>
+		</th:block>
 	</div>
 </body>
 </html>

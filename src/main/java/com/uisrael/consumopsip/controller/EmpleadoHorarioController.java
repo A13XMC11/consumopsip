@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,13 +95,28 @@ public class EmpleadoHorarioController {
         try {
             servicioEmpleadoHorario.guardarEmpleadoHorario(empleadoHorario, token);
         } catch (WebClientResponseException e) {
-            model.addAttribute("error", "No se pudo guardar la asignación: la fecha de fin no puede ser anterior a la fecha de inicio.");
             model.addAttribute("listaempleados", servicioEmpleado.listarEmpleados(token));
             model.addAttribute("listahorarios", servicioHorarios.listarHorarios(token));
             model.addAttribute("empleadohorario", empleadoHorario);
+            if (e.getStatusCode() == HttpStatus.CONFLICT) {
+                model.addAttribute("conflictoHorario", true);
+                model.addAttribute("conflictoMensaje", extraerMensajeError(e));
+            } else {
+                model.addAttribute("error", "No se pudo guardar la asignación: la fecha de fin no puede ser anterior a la fecha de inicio.");
+            }
             return "empleadohorario/crearempleadohorario";
         }
         return "redirect:/empleadohorario";
+    }
+
+    private String extraerMensajeError(WebClientResponseException e) {
+        String cuerpo = e.getResponseBodyAsString();
+        java.util.regex.Matcher matcher = java.util.regex.Pattern
+                .compile("\"message\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(cuerpo);
+        if (matcher.find()) {
+            return matcher.group(1).replace("\\\"", "\"");
+        }
+        return "El empleado ya tiene un horario activo asignado.";
     }
 
     @GetMapping("/editar/{idAsignacion}")

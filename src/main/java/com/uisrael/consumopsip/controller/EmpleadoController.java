@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.uisrael.consumopsip.model.dto.request.EmpleadoRequestDto;
@@ -83,6 +84,12 @@ public class EmpleadoController {
 
 		try {
 			servicioEmpleado.guardarEmpleado(empleado, token);
+		} catch (WebClientResponseException e) {
+			List<RolResponseDto> rolesBD = servicioRol.listarRoles(token);
+			model.addAttribute("listaroles", rolesBD);
+			model.addAttribute("empleado", empleado);
+			model.addAttribute("error", extraerMensajeError(e));
+			return "empleado/crearempleado";
 		} catch (Exception e) {
 			List<RolResponseDto> rolesBD = servicioRol.listarRoles(token);
 			model.addAttribute("listaroles", rolesBD);
@@ -133,9 +140,21 @@ public class EmpleadoController {
 		}
 		try {
 			servicioEmpleado.desactivarEmpleado(idEmpleado, token);
+		} catch (WebClientResponseException e) {
+			redirectAttributes.addFlashAttribute("error", extraerMensajeError(e));
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("error", "No se pudo desactivar el empleado.");
 		}
 		return "redirect:/empleado";
+	}
+
+	private String extraerMensajeError(WebClientResponseException e) {
+		String cuerpo = e.getResponseBodyAsString();
+		java.util.regex.Matcher matcher = java.util.regex.Pattern
+				.compile("\"message\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(cuerpo);
+		if (matcher.find()) {
+			return matcher.group(1).replace("\\\"", "\"");
+		}
+		return "No se pudo completar la operación sobre el empleado.";
 	}
 }

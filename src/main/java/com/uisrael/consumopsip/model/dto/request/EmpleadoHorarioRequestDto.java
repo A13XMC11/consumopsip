@@ -16,4 +16,5 @@ public class EmpleadoHorarioRequestDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaFin;
     private boolean estadoEmpleadoHorario;
+    private boolean forzarReemplazo;
 }

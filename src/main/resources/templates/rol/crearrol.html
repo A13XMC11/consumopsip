@@ -35,9 +35,11 @@
 					</div>
 					<div class="row g-3">
 						<div class="col-md-6">
-							<label class="form-label">Nombre (ADMIN / SUPERVISOR /
-								EMPLEADO)</label> <input class="form-control" type="text"
-								th:field="*{nombreRol}">
+							<label class="form-label">Nombre</label>
+							<select class="form-select" th:field="*{nombreRol}">
+								<option value="" disabled>Seleccione un rol</option>
+								<option th:each="nombre : ${rolesDisponibles}" th:value="${nombre}" th:text="${nombre}"></option>
+							</select>
 						</div>
 						<div class="col-md-6" th:if="${creadoRol != null}">
 							<label class="form-label">Fecha de creación</label>

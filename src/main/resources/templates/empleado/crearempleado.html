@@ -69,7 +69,8 @@
 							<label class="form-label">Contraseña</label> <input
 								class="form-control" type="password"
 								th:field="*{contrasenaEmpleado}">
-						<small class="text-muted">Deja este campo en blanco para no cambiar la contraseña actual.</small>
+						<small class="text-muted" th:if="*{idEmpleado} != 0">Deja este campo en blanco para no cambiar la contraseña actual.</small>
+						<small class="text-muted" th:if="*{idEmpleado} == 0">Deja este campo en blanco para que el sistema genere una contraseña temporal y la envíe al correo del empleado.</small>
 					</div>
 						<div class="col-md-6">
 							<label class="form-label">Rol</label> <select class="form-select"
