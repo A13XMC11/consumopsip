@@ -63,5 +63,14 @@
 			<p class="auth-footer">Óptica América — Control de Asistencia</p>
 		</div>
 	</div>
+
+	<script>
+		window.addEventListener('pageshow', function (event) {
+			if (event.persisted || (window.performance && window.performance.getEntriesByType('navigation')[0]
+					&& window.performance.getEntriesByType('navigation')[0].type === 'back_forward')) {
+				window.location.reload();
+			}
+		});
+	</script>
 </body>
 </html>

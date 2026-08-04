@@ -29,7 +29,10 @@ public class AuthController {
 	}
 
 	@GetMapping("/login")
-	public String mostrarLogin() {
+	public String mostrarLogin(HttpSession session) {
+		if (session.getAttribute("token") != null) {
+			session.invalidate();
+		}
 		return "login/login";
 	}
 
